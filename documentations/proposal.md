@@ -1,4 +1,4 @@
-#Capstone One
+# Capstone One
 
 ### App Name: (Quick Recipe)
 ![img](/static/images/quick-recipe-logo.png)
