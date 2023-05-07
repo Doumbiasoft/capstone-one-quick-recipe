@@ -7,5 +7,5 @@
 
 **API**: **[Spoonacular Recipe (RAPID API)](https://rapidapi.com/spoonacular/api/recipe-food-nutrition)**
 
-**DATABASE SCHEMA**: 
-![img](/documentations/database-schema-quick_recipe-white-bg.png)
+**DATABASE SCHEMA**:
+![Img-Light](/documentations/database-schema-quick_recipe-white-bg.png#gh-light-mode-only)![Img-Dark](/documentations/database-schema-quick_recipe.png#gh-dark-mode-only)
