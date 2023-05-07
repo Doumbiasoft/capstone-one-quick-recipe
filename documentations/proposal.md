@@ -2,6 +2,7 @@
 
 ### App Name: (Quick Recipe)
 ![img](/static/images/quick-recipe-logo.png)
+
 **1. What goal will your website be designed to achieve?**
 
 >To create a recipe recommendation system that utilizes free food APIs to suggest recipes to users based on their dietary restrictions, preferences, and available ingredients.
