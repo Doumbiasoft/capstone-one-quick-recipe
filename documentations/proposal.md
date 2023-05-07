@@ -1,7 +1,7 @@
 #Capstone One
 
 ### App Name: (Quick Recipe)
-
+![img](/static/images/quick-recipe-logo.png)
 **1. What goal will your website be designed to achieve?**
 
 >To create a recipe recommendation system that utilizes free food APIs to suggest recipes to users based on their dietary restrictions, preferences, and available ingredients.
@@ -13,16 +13,14 @@
 
 **3. What data do you plan on using? You may have not picked your actual API yet,which is fine, just outline what kind of data you would like it to contain.**
 
->I am going to use the data from the **Spoonacular API**.
+>I am going to use the data from the **[Spoonacular API (RAPID API)](https://rapidapi.com/spoonacular/api/recipe-food-nutrition)**.
 
 
 **4. In brief, outline your approach to creating your project (knowing that you may not know everything in advance and that these details might change later). Answer questions like the ones below, but feel free to add more information:**
 
 
 **a. What does your database schema look like?**
-```
-
-```
+![img](/documentations/database-schema-quick_recipe-white-bg.png)
 
 
 **b. What kinds of issues might you run into with your API?**
@@ -59,13 +57,9 @@
 **e. What will the user flow look like?**
 
 -	Registration And Authentication
--	Dashboard
 -	Favorite Recipes
--	Meal Plan
--	Create Recipes
 -	Share Recipes
 -	Rating Recipes
--	Comment Recipes
 
 
 **f. What features make your site more than CRUD?**
