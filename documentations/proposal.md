@@ -1,7 +1,7 @@
 # Capstone One
 
 ### App Name: (Quick Recipe)
-![img](/static/images/quick-recipe-logo.png)
+![img](/app/static/images/quick-recipe-logo.png)
 
 **1. What goal will your website be designed to achieve?**
 
