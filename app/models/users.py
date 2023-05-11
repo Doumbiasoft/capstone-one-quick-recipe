@@ -1,13 +1,5 @@
 from app.extensions import db,bcrypt,func
 
-
-def hash_function(value):
-      return bcrypt.generate_password_hash(value).decode("utf8")
-
-def hash_function_check(old_password_hash,new_password_hash):
-      return bcrypt.check_password_hash(old_password_hash, new_password_hash)
-
-
 class User(db.Model):
     """User Model"""
 
@@ -31,6 +23,12 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User {self.id} {self.full_name} {self.email}>"
+    @classmethod
+    def hash_function(cls,value):
+      return bcrypt.generate_password_hash(value).decode("utf8")
+    @classmethod
+    def hash_function_check(cls,old_password_hash,new_password_hash):
+            return bcrypt.check_password_hash(old_password_hash, new_password_hash)
 
 
       
