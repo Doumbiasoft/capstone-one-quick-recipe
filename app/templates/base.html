@@ -4,65 +4,142 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="apple-touch-icon" sizes="152x152" href="../static/images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../static/images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../static/images/favicon-16x16.png">
     <link rel="manifest" href="../static/images/site.webmanifest">
-    <link rel="mask-icon" href="../static/images/safari-pinned-tab.svg" color="#e99d19">
-    <meta name="msapplication-TileColor" content="#e99d19">
+    <link rel="mask-icon" href="../static/images/safari-pinned-tab.svg" color="#e59038">
+    <meta name="msapplication-TileColor" content="#e59038">
     <meta name="theme-color" content="#ffffff">
- 
-<meta charset="UTF-8">
-<title>{% block title %} {% endblock %} - Quick Recipe</title>
-    
-    <style>
-        h2 {
-            width: 100%;
-        }
+     <!-- Google Font -->
+     <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&amp;display=swap" rel="stylesheet">
 
-        .title {
-            margin: 5px;
-            width: 100%;
-        }
-
-        .content {
-            margin: 5px;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-        .post {
-            flex: 20%;
-            padding: 10px;
-            margin: 5px;
-            background-color: #f3f3f3;
-            inline-size: 100%;
-        }
-
-        .title a {
-            color: #00a36f;
-            text-decoration: none;
-        }
-
-        nav a {
-            color: #d64161;
-            font-size: 3em;
-            margin-left: 50px;
-            text-decoration: none;
-        }
-
-    </style>
+     <!-- Css Styles -->
+     <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css">
+     <link rel="stylesheet" href="../static/css/font-awesome.min.css" type="text/css">
+     <link rel="stylesheet" href="../static/css/nice-select.css" type="text/css">
+     <link rel="stylesheet" href="../static/css/slicknav.min.css" type="text/css">
+     <link rel="stylesheet" href="../static/css/style.css" type="text/css">
+    <title>{% block title %} {% endblock %} - Quick Recipe</title>
 </head>
 <body>
-    <nav>
-        <a href="{{ url_for('main.index') }}">Home </a>
-        
-    </nav>
-    <hr>
-    <div class="content">
-        {% block content %} {% endblock %}
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
     </div>
+       <!-- Header Section Begin -->
+       <header class="header-section-other">
+        <div class="container-fluid">
+            <div class="logo">
+                <a href="{{ url_for('main.index') }}"><img src="../static/images/quick-recipe-logo.png" style="height: 50px;" alt=""></a>
+            </div>
+            <div class="nav-menu">
+                <nav class="main-menu mobile-menu">
+                    <ul>
+                        <li class="active"><a href="{{ url_for('main.index') }}">Home</a></li>
+                        <li><a href="#">Advanced Search</a></li>
+                        <li><a href="#">Favorites Recipe</a></li>
+                        <li><a href="#">Sign Up/Log In</a></li>
+                        <!-- <li style="cursor: pointer;font-size: 20px;"><img class="rounded-circle" width="35" height="35" alt="icon" src="https://qph.cf2.quoracdn.net/main-qimg-6d72b77c81c9841bd98fc806d702e859-lq"/>&nbsp;&nbsp;<b>Mouhamed Doumbia</b>
+                            <ul class="sub-menu">
+                                <li><a href="#"><i class="fa fa-user-circle"></i>&nbsp;&nbsp;Account</a></li>
+                                <li><a href="#"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
+                            </ul>
+                        </li> -->
+                    </ul>
+                </nav>
+                <div class="nav-right search-switch">
+                   <!--  <i class="fa fa-search"></i> -->
+                </div>
+            </div>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </header>
+    <!-- Header End -->
+
+    <!-- Hero Search Section Begin -->
+    <div class="hero-search set-bg" data-setbg="../static/img/search-bg.jpg">
+        <div class="container text-center">
+            <br>
+            <h3 style="color: white;">Welcome to Quick Recipe!</h3>
+            <span style="color: #e59038;font: 1em sans-serif;font-size: 22px;">Cuisiner avec passion</span>
+            <div class="filter-table">
+                <form action="#" class="filter-search">
+                    <input type="text" placeholder="Search recipe">
+                    <select id="category">
+                        <option value="">Category</option>
+                    </select>
+                    <select id="tag">
+                        <option value="">Tags</option>
+                    </select>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+            <hr style="background-color: #e59038;height: 4px;">
+        </div>
+
+    </div>
+    <!-- Hero Search Section End -->
+    <div class="spad-mid"></div>
+    <div>
+        {% for type, msg in get_flashed_messages(with_categories=true) %}
+        <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+            <div>{{ msg }}</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+       </div>
+        <br/>
+        {% endfor %}
+    </div>
+    {% block content %} {% endblock %}
+   
+     <!-- Footer Section Begin -->
+     <footer class="footer-section bg-dark">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="fs-left">
+                        <div class="logo">
+                            <a href="{{ url_for('main.index') }}">
+                                <img src="../static/images/logo-footer.png" style="height: 90px;" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 offset-lg-1">
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/doumbiamouhamed/"><i class="fa fa-linkedin"></i><span>Linkedin</span></a>
+                        <a href="https://github.com/doumbiasoft"><i class="fa fa-github"></i><span>GitHub</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="copyright-text">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Designed by Mouhamed Doumbia
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search model -->
+	<div class="search-model">
+		<div class="h-100 d-flex align-items-center justify-content-center">
+			<div class="search-close-switch">+</div>
+			<form class="search-model-form">
+				<input type="text" id="search-input" placeholder="Find a Recipe">
+			</form>
+		</div>
+	</div>
+	<!-- Search model end -->
+
+    <!-- Js Plugins -->
+    <script src="../static/js/jquery-3.3.1.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/jquery.slicknav.js"></script>
+    <script src="../static/js/jquery.nice-select.min.js"></script>
+    <script src="../static/js/mixitup.min.js"></script>
+    <script src="../static/js/main.js"></script>
 </body>
 </html>
