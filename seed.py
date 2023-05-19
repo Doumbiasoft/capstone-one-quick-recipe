@@ -7,12 +7,10 @@ app = create_app()
 with app.app_context():
         db.drop_all()
         db.create_all()
-
         User.query.delete()
 
-        # Add user admin
+        """Add user admin"""
         user_admin = User(full_name='administrator', email='quickrecipe@ymail.com', password=User.hash_function("administrator#generale"), is_oauth=False, is_admin=True)
-       
         db.session.add_all([user_admin])
         db.session.commit()
 

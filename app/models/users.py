@@ -25,9 +25,11 @@ class User(db.Model):
         return f"<User {self.id} {self.full_name} {self.email}>"
     @classmethod
     def hash_function(cls,value):
+      """This function will encrypt any value in input parameters"""
       return bcrypt.generate_password_hash(value).decode("utf8")
     @classmethod
     def hash_function_check(cls,old_password_hash,new_password_hash):
+            """This function will check any encrypt value in input parameters"""
             return bcrypt.check_password_hash(old_password_hash, new_password_hash)
 
 

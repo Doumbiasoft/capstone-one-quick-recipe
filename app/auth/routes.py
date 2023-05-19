@@ -5,9 +5,10 @@ from app.forms.auth.register import RegisterForm
 
 @bp.route('/login', methods=['GET','POST'])
 def login():
+    """login view for user authentication"""
     return render_template('auth/login.html')
-
 
 @bp.route('/register', methods=['GET','POST'])
 def register():
+    """register view for user sign up"""
     return render_template('auth/register.html')
