@@ -35,10 +35,10 @@
             <div class="nav-menu">
                 <nav class="main-menu mobile-menu">
                     <ul>
-                        <li id="link_home"><a href="{{ url_for('main.index') }}">Home</a></li>
-                        <li id="link_recipes"><a href="{{ url_for('search.recipes') }}">Recipes</a></li>
-                        <li><a href="#">Favorite Recipes</a></li>
-                        <li><a href="#">Sign Up/Log In</a></li>
+                        <li id="link_home"><a href="{{ url_for('main.index') }}"><i class="fa fa-bank" style="font-size: large;"></i>&nbsp;Home</a></li>
+                        <li id="link_recipes"><a href="{{ url_for('search.recipes') }}"><i class="fa fa-file-text" style="font-size: large;"></i>&nbsp;Recipes</a></li>
+                        <li><a href="#"><i class="fa fa-bookmark" style="font-size: large;"></i>&nbsp;Favorites</a></li>
+                        <li><a href="#"><i class="fa fa-user" style="font-size: large;"></i>&nbsp;Sign Up/Log In</a></li>
                         <!-- <li style="cursor: pointer;font-size: 20px;"><img class="rounded-circle" width="35" height="35" alt="icon" src="https://qph.cf2.quoracdn.net/main-qimg-6d72b77c81c9841bd98fc806d702e859-lq"/>&nbsp;&nbsp;<b>Mouhamed Doumbia</b>
                             <ul class="sub-menu">
                                 <li><a href="#"><i class="fa fa-user-circle"></i>&nbsp;&nbsp;Account</a></li>
@@ -57,7 +57,7 @@
     <!-- Header End -->
 
     <!-- Hero Search Section Begin -->
-    <div class="hero-search set-bg" data-setbg="../static/img/search-bg.jpg">
+    <div class="hero-search set-bg" data-setbg="{{url_for('static',filename='img/search-bg.jpg')}}">
         <div class="container text-center">
             <br>
             <h3 style="color: white;">Welcome to Quick Recipe!</h3>
@@ -99,7 +99,7 @@
                     <div class="fs-left">
                         <div class="logo">
                             <a href="{{ url_for('main.index') }}">
-                                <img src="../static/images/logo-footer.png" style="height: 90px;" alt="">
+                                <img src="{{url_for('static',filename='images/logo-footer.png')}}" style="height: 90px;" alt="">
                             </a>
                         </div>
                     </div>
