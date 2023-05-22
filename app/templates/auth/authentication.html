@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block title %} Authentication {% endblock %}
+
+{% block content %}
+ <section class="contact-section spad">
+    <section class="feature-recipe" style="padding-top: 0px;padding-bottom: 5px;background-color: transparent;">
+        <div class="section-title">
+            <h5><i class="fa fa-lock" style="font-size: large;"></i>&nbsp;Authentication</h5>
+        </div>
+    </section>
+    <div class="container">
+
+    <!-- Tabs navs ----->
+    <div id="Tab-view" >
+    <ul class="nav nav-tabs mb-3 " id="tabs" data-tabs="tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+        <a class="nav-link active" data-toggle="tab" href="#one" role="tab" aria-controls="one" aria-selected="true">
+            <i class="fa fa-unlock" style="font-size: large;font-weight: 700;color: orange;"></i>&nbsp;<strong>Login</strong>
+        </a>
+        </li>
+        <li class="nav-item" role="presentation">
+        <a class="nav-link" data-toggle="tab" href="#two" role="tab" aria-controls="two" aria-selected="false">
+            <i class="fa fa-key" style="font-size: large;font-weight: 700;color: orange;"></i>&nbsp;<strong>Register</strong> 
+        </a>
+        </li>
+    </ul>
+    <!-- Tabs navs ----->
+    <!-- Tabs content -->
+    <div class="tab-content" id="content">
+        <div class="tab-pane fade show active" id="one" role="tabpanel" aria-labelledby="one">
+            <div class="col-lg-6">
+                <form action="#" class="contact-form">
+                    <h3>Sign In</h3>
+                    <div class="row">
+                      <div class="col-lg-12 social-buttons">
+                        <a class="btn btn-lg btn-block btn-social btn-google text-white">
+                          <span class="fa fa-google"></span> Sign in with Google
+                        </a>
+                        <a class="btn btn-lg btn-block btn-social btn-facebook text-white">
+                          <span class="fa fa-facebook"></span> Sign in with Facebook
+                        </a>
+                        <a class="btn btn-lg btn-block btn-social btn-twitter text-white">
+                          <span class="fa fa-twitter"></span> Sign in with Twitter
+                        </a>
+                      </div>
+                    </div>
+                    <hr>
+                    <h3>-- Or --</h3>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input type="text" placeholder="Email">
+                        </div>
+                        <div class="col-lg-12">
+                            <input type="password" placeholder="Password">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-100 my-3">Log In</button>
+                    <div class="text-center">
+                    <p><a href="#two"><strong>Forgot password?</strong></a></p>
+                    </div>
+                   
+                </form>
+                
+            </div>
+        </div>
+        <div class="tab-pane fade" id="two" role="tabpanel" aria-labelledby="two">
+            <div class="col-lg-6">
+            <form action="#" class="contact-form">
+                <h3>Sign Up</h3>
+                    <div class="row">
+                      <div class="col-lg-12 social-buttons">
+                        <a class="btn btn-lg btn-block btn-social btn-google text-white">
+                          <span class="fa fa-google"></span> Sign up with Google
+                        </a>
+                        <a class="btn btn-lg btn-block btn-social btn-facebook text-white">
+                          <span class="fa fa-facebook"></span> Sign up with Facebook
+                        </a>
+                        <a class="btn btn-lg btn-block btn-social btn-twitter text-white">
+                          <span class="fa fa-twitter"></span> Sign up with Twitter
+                        </a>
+                      </div>
+                    </div>
+                    <hr>
+                    <h3>-- Or --</h3>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input type="text" placeholder="Full name">
+                        <input type="text" placeholder="Email">
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="password" placeholder="Password">
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="password" placeholder="Confirm Password">
+                    </div>
+                </div>
+                <button type="submit" class="w-100 my-3">Register</button>
+                
+            </form>
+        </div>
+        </div>
+    </div>
+    </div>
+    <!-- Tabs content -->
+
+       
+    </div>
+</section>
+
+{% endblock %}
+
+{% block navlinkactive %} 
+    $('#link_auth').toggleClass('active');
+{% endblock %}

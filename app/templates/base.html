@@ -19,6 +19,9 @@
      <link rel="stylesheet" href="{{url_for('static',filename='css/nice-select.css')}}" type="text/css">
      <link rel="stylesheet" href="{{url_for('static',filename='css/slicknav.min.css')}}" type="text/css">
      <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}" type="text/css">
+
+      <!--Social Buttons for Bootstrap-->
+     <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap-social.css')}}" rel="stylesheet" >
     <title>{% block title %} {% endblock %} - Quick Recipe</title>
 </head>
 <body>
@@ -35,16 +38,16 @@
             <div class="nav-menu">
                 <nav class="main-menu mobile-menu">
                     <ul>
-                        <li id="link_home"><a href="{{ url_for('main.index') }}"><i class="fa fa-bank" style="font-size: large;"></i>&nbsp;Home</a></li>
+                        <li id="link_home"><a href="{{ url_for('main.index') }}"><i class="fa fas fa-home" style="font-size: x-large;"></i>&nbsp;Home</a></li>
                         <li id="link_recipes"><a href="{{ url_for('search.recipes') }}"><i class="fa fa-file-text" style="font-size: large;"></i>&nbsp;Recipes</a></li>
-                        <li><a href="#"><i class="fa fa-bookmark" style="font-size: large;"></i>&nbsp;Favorites</a></li>
-                        <li><a href="#"><i class="fa fa-user" style="font-size: large;"></i>&nbsp;Sign Up/Log In</a></li>
-                        <!-- <li style="cursor: pointer;font-size: 20px;"><img class="rounded-circle" width="35" height="35" alt="icon" src="https://qph.cf2.quoracdn.net/main-qimg-6d72b77c81c9841bd98fc806d702e859-lq"/>&nbsp;&nbsp;<b>Mouhamed Doumbia</b>
+                        <li id="link_favorite_recipes"><a href="{{ url_for('main.recipes_favorites') }}"><i class="fa fa-bookmark" style="font-size: large;"></i>&nbsp;Favorites</a></li>
+                        <li id="link_auth"><a href="{{ url_for('auth.authentication') }}"><i class="fa fa-user" style="font-size: large;"></i>&nbsp;Sign Up/Log In</a></li>
+                        <li style="cursor: pointer;font-size: 20px;"><img class="rounded-circle" width="35" height="35" alt="icon" src="https://qph.cf2.quoracdn.net/main-qimg-6d72b77c81c9841bd98fc806d702e859-lq"/>&nbsp;&nbsp;<b>Mouhamed Doumbia</b>
                             <ul class="sub-menu">
                                 <li><a href="#"><i class="fa fa-user-circle"></i>&nbsp;&nbsp;Account</a></li>
                                 <li><a href="#"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
                             </ul>
-                        </li> -->
+                        </li>
                     </ul>
                 </nav>
                 <div class="nav-right search-switch">

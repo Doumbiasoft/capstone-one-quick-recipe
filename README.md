@@ -9,3 +9,14 @@
 
 **DATABASE SCHEMA**:
 ![Img-Light](/documentations/database-schema-quick_recipe-white-bg.png#gh-light-mode-only)![Img-Dark](/documentations/database-schema-quick_recipe.png#gh-dark-mode-only)
+
+
+```sh
+/** ------ Note ------------- **/
+
+export FLASK_APP=app
+export FLASK_ENV=development
+export FLASK_DEBUG=1
+flask run
+flask run -h "ip-address"
+```
