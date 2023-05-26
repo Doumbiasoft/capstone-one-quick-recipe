@@ -7,7 +7,7 @@
     --------------------*/
     $(window).on('load', function () {
         $(".loader").fadeOut();
-        $("#preloder").delay(100).fadeOut("slow");
+        $("#preloder").delay(200).fadeOut("slow");
          /*------------------
             Product filter
         --------------------*/
@@ -26,6 +26,11 @@
     $('.set-bg').each(function () {
         var bg = $(this).data('setbg');
         $(this).css('background-image', 'url(' + bg + ')');
+    });
+
+    $('.set-html').each(function () {
+        var html = $(this).data('html');
+        $(this).html(html)
     });
 
 

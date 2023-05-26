@@ -3,7 +3,17 @@ from app.auth import bp
 from app.forms.auth.login import LoginForm
 from app.forms.auth.register import RegisterForm
 
-@bp.route('/authentication', methods=['GET','POST'])
+@bp.route('/authentication', methods=['GET'])
 def authentication():
-    """register view for user login and sign up"""
+    """authentication view for user login and sign up"""
+    return render_template('auth/authentication.html')
+
+@bp.route('/login', methods=['POST'])
+def login():
+    """login view"""
+    return render_template('auth/authentication.html')
+
+@bp.route('/register', methods=['POST'])
+def register():
+    """register view"""
     return render_template('auth/authentication.html')

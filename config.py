@@ -10,8 +10,8 @@ class Config:
     SQLALCHEMY_DATABASE_URI = database_URI\
     or 'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_ECHO=True
-    DEBUG_TB_INTERCEPT_REDIRECT=False
-    TESTING=True
-    DEBUG_TB_HOSTS=['dont-show-debug-toolbar']
+    SQLALCHEMY_ECHO = True
+    DEBUG_TB_INTERCEPT_REDIRECT = False
+    TESTING = True
+    DEBUG_TB_HOSTS = ['dont-show-debug-toolbar']
     #WTF_CSRF_ENABLED = False

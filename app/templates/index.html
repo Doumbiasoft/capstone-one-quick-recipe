@@ -6,104 +6,49 @@
     <section class="spad">
     <section class="top-recipe spad">
         <div class="section-title">
-            <h5><i class="fa fa-trophy" style="font-size: large;"></i>&nbsp;Top Recipes</h5>
+            <h5><i class="fa fa-random" style="font-size: large;"></i>&nbsp;Random Recipes</h5>
         </div>
         <div class="container po-relative">
-             
             <div class="row">
                 <div class="col-lg-6">
                     <div class="top-recipe-item large-item">
                         <a href="{{url_for('search.recipes_details')}}">
-                            <div class="top-recipe-img set-bg" data-setbg="../static/img/top-recipe/recipe-1.jpg"></div>
+                            <div class="top-recipe-img set-bg" data-setbg="{{random_recipe.thumbnail_url}}"></div>
                         </a>
                         <div class="top-recipe-text">
-                            <div class="cat-name">Desert</div>
+                            <div class="cat-name">Random Recipe</div>
                             <a href="#">
-                                <h4>One Pot Weeknight Lasagna Soup Recipe</h4>
+                                <h4>{{random_recipe.name}}</h4>
                             </a>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing
-                                elit, sed do eiusmod tempor incididunt ut labore.</p>
+                            <p>
+                               <div class="set-html" data-html="{{random_recipe.description}}"></div>
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
+                    {% for recipe in recipes_desert %}
                     <div class="top-recipe-item">
                         <div class="row">
                             <div class="col-sm-4">
                                 <a href="{{url_for('search.recipes_details')}}">
-                                    <div class="top-recipe-img set-bg" data-setbg="../static/img/top-recipe/recipe-2.jpg"></div>
+                                    <div class="top-recipe-img set-bg" data-setbg="{{recipe.thumbnail_url}}"></div>
                                 </a>
                             </div>
                             <div class="col-sm-8">
                                 <div class="top-recipe-text">
-                                    <div class="cat-name">Vegan</div>
+                                    <div class="cat-name">Dessert</div>
                                     <a href="#">
-                                        <h4>One Pot Weeknight Lasagna Soup Recipe</h4>
+                                        <h4>{{recipe.name}}</h4>
                                     </a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna aliqua.</p>
+                                    <p>
+                                        <div class="set-html" data-html="{{recipe.description}}"></div>
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="top-recipe-item">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <a href="{{url_for('search.recipes_details')}}">
-                                <div class="top-recipe-img set-bg" data-setbg="../static/img/top-recipe/recipe-3.jpg"></div>
-                            </a>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="top-recipe-text">
-                                    <div class="cat-name">Meat lover</div>
-                                    <a href="#">
-                                        <h4>Veggie soup with Mushrooms</h4>
-                                    </a>
-                                    <p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                        magna aliqua. Lorem ipsum dolor sit amet, consectetur.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="top-recipe-item">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <a href="{{url_for('search.recipes_details')}}">
-                                <div class="top-recipe-img set-bg" data-setbg="../static/img/top-recipe/recipe-4.jpg"></div>
-                            </a>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="top-recipe-text">
-                                    <div class="cat-name">Desert</div>
-                                    <a href="#">
-                                        <h4>Caramel Ice Cream with Berries</h4>
-                                    </a>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna aliqua.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="top-recipe-item">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <a href="{{url_for('search.recipes_details')}}">
-                                <div class="top-recipe-img set-bg" data-setbg="../static/img/top-recipe/recipe-5.jpg"></div>
-                                </a>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="top-recipe-text">
-                                    <div class="cat-name">Desert</div>
-                                    <a href="#">
-                                        <h4>Freash Octopuse with lime juice</h4>
-                                    </a>
-                                    <p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                        magna aliqua. Lorem ipsum dolor sit amet, consectetur.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

@@ -650,9 +650,9 @@ ol {
 }
 
 .top-recipe-item .top-recipe-text a {
-	display: block;
-	margin-top: 9px;
-	margin-bottom: 20px;
+	/* display: block; */
+	/* margin-top: 9px; */
+	/* margin-bottom: 20px; */
 }
 
 .top-recipe-item .top-recipe-text a h4 {

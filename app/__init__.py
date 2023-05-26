@@ -20,7 +20,6 @@ def create_app(config_class=Config):
     app.register_blueprint(search_bp, url_prefix='/search')
 
     """------------------END----------------------------------------------"""
-    
     """Route for testing Application Factory Pattern"""
     @app.route('/test/')
     def test_page():
