@@ -58,29 +58,7 @@
         </div>
     </header>
     <!-- Header End -->
-
-    <!-- Hero Search Section Begin -->
-    <div class="hero-search set-bg" data-setbg="{{url_for('static',filename='img/search-bg.jpg')}}">
-        <div class="container text-center">
-            <br>
-            <h3 style="color: white;">Welcome to Quick Recipe!</h3>
-            <span style="color: #e59038;font: 1em sans-serif;font-size: 22px;">Cuisiner avec passion</span>
-            <div class="filter-table">
-                <form action="#" class="filter-search">
-                    <input type="text" placeholder="Search recipe">
-                    <select id="category">
-                        <option value="">Category</option>
-                    </select>
-                    <select id="tag">
-                        <option value="">Tags</option>
-                    </select>
-                    <button type="submit">Search</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Hero Search Section End -->
-    <div class="spad-mid"><hr style="background-color: #e59038;height: 4px;"></div>
+    <div class="spad-mid"><hr class="hr-line"></div>
     <!--flash message-->
     <div>
         {% for type, msg in get_flashed_messages(with_categories=true) %}

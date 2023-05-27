@@ -2,7 +2,25 @@
 {% block title %} Recipes {% endblock %}
 
 {% block content %}
-
+ <!-- Hero Search Section Begin -->
+ <div class="hero-search set-bg" data-setbg="{{url_for('static',filename='img/search-bg.jpg')}}">
+    <div class="container text-center">
+        <br><h2 class="text-white" style="font-size: 50px">Find a Recipe!</h2><br>
+        <div class="filter-table">
+            <form action="#" class="filter-search">
+                <input type="text" placeholder="Search recipe">
+                <select id="category">
+                    <option value="">Category</option>
+                </select>
+                <select id="tag">
+                    <option value="">Tags</option>
+                </select>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Hero Search Section End -->
  <!-- Recipe Section Begin -->
  <section class="recipe-section spad">
     <section class="feature-recipe" style="padding-top: 0px;padding-bottom: 5px;background-color: transparent;">

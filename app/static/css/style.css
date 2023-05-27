@@ -43,7 +43,11 @@ h5 {
 h6 {
 	font-size: 16px;
 }
-
+.hr-line{
+	background-color: #e59038;
+	height: 4px;
+	margin:0px
+}
 p {
 	font-size: 15px;
 	color: #353535;
@@ -56,7 +60,9 @@ p {
 img {
 	max-width: 100%;
 }
-
+.img {
+	max-width: 100%;
+}
 input:focus,
 select:focus,
 button:focus,
@@ -731,7 +737,7 @@ ol {
 
 .cf-filter .cf-item {
 	float: left;
-	width: calc(20% - 32px);
+	width: calc(20% - 42px);
 	margin-right: 40px;
 	margin-bottom: 30px;
 }
@@ -743,6 +749,10 @@ ol {
 .cf-filter .cf-item .cf-item-pic img {
 	min-width: 100%;
 }
+.cf-filter .cf-item .cf-item-pic .img {
+	min-width: 100%;
+}
+
 
 .cf-filter .cf-item .cf-item-text {
 	text-align: center;
@@ -1115,7 +1125,7 @@ ol {
 
 .hero-search .filter-table .filter-search {
 	display: table-cell;
-	vertical-align: middle;
+	/* vertical-align: middle; */
 }
 
 .hero-search .filter-table .filter-search input {
