@@ -19,6 +19,7 @@
      <link rel="stylesheet" href="{{url_for('static',filename='css/nice-select.css')}}" type="text/css">
      <link rel="stylesheet" href="{{url_for('static',filename='css/slicknav.min.css')}}" type="text/css">
      <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}" type="text/css">
+     <link rel="stylesheet" href="{{url_for('static',filename='css/pagination.css')}}" type="text/css">
 
       <!--Social Buttons for Bootstrap-->
      <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap-social.css')}}" rel="stylesheet" >
@@ -50,9 +51,6 @@
                         </li> -->
                     </ul>
                 </nav>
-                <div class="nav-right search-switch">
-                   <!--  <i class="fa fa-search"></i> -->
-                </div>
             </div>
             <div id="mobile-menu-wrap"></div>
         </div>
@@ -87,7 +85,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 offset-lg-1">
-                    <div class="social-links">
+                    <div class="social-links" align="center">
                         <a  href="https://www.linkedin.com/in/doumbiamouhamed/" target="_blank"><i class="fa fa-linkedin"></i><span>Linkedin</span></a>
                         <a href="https://github.com/doumbiasoft" target="_blank"><i class="fa fa-github"></i><span>GitHub</span></a>
                     </div>
@@ -103,17 +101,6 @@
     </footer>
     <!-- Footer Section End -->
 
-    <!-- Search model -->
-	<div class="search-model">
-		<div class="h-100 d-flex align-items-center justify-content-center">
-			<div class="search-close-switch">+</div>
-			<form class="search-model-form">
-				<input type="text" id="search-input" placeholder="Find a Recipe">
-			</form>
-		</div>
-	</div>
-	<!-- Search model end -->
-
     <!-- Js Plugins -->
     <script src="{{url_for('static',filename='js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
@@ -121,6 +108,7 @@
     <script src="{{url_for('static',filename='js/mixitup.min.js')}}"></script>
     <script src="{{url_for('static',filename='js/jquery.nice-select.min.js')}}"></script>
     <script src="{{url_for('static',filename='js/main.js')}}"></script>
+    <script src="{{url_for('static',filename='js/pagination.js')}}"></script>
     <script>{% block scripts %}{% endblock %}</script>
 </body>
 </html>

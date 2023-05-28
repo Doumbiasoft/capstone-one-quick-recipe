@@ -29,7 +29,7 @@
                                 <h4>{{random_recipe.name}}</h4>
                             </a>
                             <p>
-                               <div class="set-html" data-html="{{random_recipe.description}}"></div>
+                               <div class="set-limit" data-html="{{random_recipe.description}}"></div>
                             </p>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                                         <h4>{{recipe.name}}</h4>
                                     </a>
                                     <p>
-                                        <div class="set-html" data-html="{{recipe.description}}"></div>
+                                        <div class="set-limit" data-html="{{recipe.description}}"></div>
                                     </p>
                                 </div>
                             </div>
@@ -137,8 +137,6 @@
                     </div>
                 </div>
                 {% endfor %}
-
-
             </div>
         </div>
     </div>
@@ -150,7 +148,6 @@
             <h5>African Recipes</h5>
         </div>
         <div class="container po-relative">
-            
             <div class="row">
                 {% for recipe in recipes_african %}
                 <div class="col-lg-6">
@@ -161,8 +158,10 @@
                             </a>
                         </div>
                         <div class="fr-item-text">
-                            <h4>{{recipe.name}}</h4>
-                            <p> <div class="set-html" data-html="{{recipe.description}}"></div></p>
+                            <a href="{{url_for('search.recipes_details')}}">
+                                <h4>{{recipe.name}}</h4>
+                            </a>
+                            <p> <div class="set-limit" data-html="{{recipe.description}}"></div></p>
                         </div>
                     </div>
                 </div>

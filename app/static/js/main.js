@@ -33,6 +33,15 @@
         $(this).html(html)
     });
 
+    $('.set-limit').each(function () {
+        var html = $(this).data('html');
+        var length = 100;
+        var trimmedString = html.substring(0, length)+"...";
+        $(this).html(trimmedString)
+    });
+
+
+
 
     // Search model
 	$('.search-switch').on('click', function() {
