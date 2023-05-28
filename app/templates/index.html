@@ -71,7 +71,8 @@
                 <div class="col-lg-12 text-center">
                     <div class="filter-item">
                         <ul>
-                            <li data-filter=".mostpopular" class="active">Most popular</li>
+                            <li data-filter="*" class="active">All</li>
+                            <li data-filter=".mostpopular">Most popular</li>
                             <li data-filter=".meatlover">Meat Lover</li>
                             <li data-filter=".glutenfree">Gluten Free</li>
                             <li data-filter=".vegetarian" >Vegetarian</li>
@@ -146,12 +147,12 @@
     <!-- Feature Recipe Section Begin -->
     <section class="feature-recipe">
         <div class="section-title">
-            <h5>Featured Recipes</h5>
+            <h5>African Recipes</h5>
         </div>
         <div class="container po-relative">
             
             <div class="row">
-                {% for recipe in recipes_feature %}
+                {% for recipe in recipes_african %}
                 <div class="col-lg-6">
                     <div class="fr-item">
                         <div class="fr-item-img" align="center">

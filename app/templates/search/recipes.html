@@ -5,17 +5,23 @@
  <!-- Hero Search Section Begin -->
  <div class="hero-search set-bg" data-setbg="{{url_for('static',filename='img/search-bg.jpg')}}">
     <div class="container text-center">
-        <br><h2 class="text-white" style="font-size: 50px">Find a Recipe!</h2><br>
+        <br><h2 class="text-white" style="font-size: 50px">Find a Recipe</h2><br>
         <div class="filter-table">
             <form action="#" class="filter-search">
                 <input type="text" placeholder="Search recipe">
-                <select id="category">
-                    <option value="">Category</option>
-                </select>
-                <select id="tag">
-                    <option value="">Tags</option>
-                </select>
-                <button type="submit">Search</button>
+                    <select id="category">
+                        <option value="">-- Category --</option>
+                        {% for cat in list_type %}
+                          <option value="{{cat.id}}">{{cat.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <select id="tag" >
+                        <option value="">-- Tags --</option>
+                        {% for tag in tags %}
+                          <option value="{{tag.id}}">{{tag.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Search</button>
             </form>
         </div>
     </div>

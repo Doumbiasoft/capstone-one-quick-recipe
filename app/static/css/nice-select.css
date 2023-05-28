@@ -136,3 +136,8 @@
 
 .no-csspointerevents .nice-select.open .list {
   display: block; }
+
+.list {
+  max-height: 300px; /* or whatever the height you want*/
+  overflow-y: scroll !important;
+}
