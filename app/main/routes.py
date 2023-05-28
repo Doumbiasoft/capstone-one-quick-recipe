@@ -1,6 +1,6 @@
 from app.main import bp
-from app.extensions import API_URL_BASE,headers,get_data,render_template
-from random import randrange,sample
+from app.extensions import API_URL_BASE,headers,get_data,render_template,randrange,sample
+
 
 @bp.route('/')
 def index():

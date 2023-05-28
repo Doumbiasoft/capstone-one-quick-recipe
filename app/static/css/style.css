@@ -662,6 +662,8 @@ ol {
 
 .top-recipe-item .top-recipe-text a h4 {
 	font-weight: 700;
+	margin-top: 20px;
+	margin-bottom: 10px;
 }
 
 .top-recipe-item .top-recipe-text p {
@@ -1126,7 +1128,7 @@ ol {
 }
 
 .hero-search .filter-table .filter-search input {
-	width: calc(28% - 10px);
+	width: calc(50% - 10px);
 	margin-right: 10px;
 	font-size: 16px;
 	height: 54px;
@@ -1162,7 +1164,7 @@ ol {
 .hero-search .filter-table .filter-search .nice-select {
 	float: none;
 	display: inline-block;
-	width: calc(28% - 10px);
+	width: calc(30% - 10px);
 	margin-right: 10px;
 	font-size: 16px;
 	height: 53px;
@@ -1210,6 +1212,9 @@ ol {
 .recipe-item a img {
 	min-width: 100%;
 }
+.recipe-item a .img {
+	min-width: 100%;
+}
 
 .recipe-item .ri-text .cat-name {
 	color: #fff;
@@ -1221,9 +1226,13 @@ ol {
 	padding: 4px 25px 4px 25px;
 }
 
-.recipe-item .ri-text a {
+.recipe-item .ri-text  a {
 	margin-bottom: 20px;
-	margin-top: 23px;
+	margin-top: 23px; 
+}
+.recipe-item .ri-text .anker_tag a{
+ margin: 0px;
+ display: inline;
 }
 
 .recipe-item .ri-text a h4 {

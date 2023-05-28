@@ -4,14 +4,14 @@ from flask_bcrypt import Bcrypt
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.sql import func
 from flask_wtf import FlaskForm
-from wtforms import StringField,PasswordField,EmailField,TextAreaField,BooleanField
+from wtforms import StringField,PasswordField,EmailField,TextAreaField,BooleanField,SelectField
 from wtforms.validators import InputRequired,Length
 import os
 import requests
 import datetime
 from api_key import api_key
 from helpers import Json2Object,get_data
-
+from random import randrange,sample
 
 
 db = SQLAlchemy()
