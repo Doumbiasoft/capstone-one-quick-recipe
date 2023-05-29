@@ -2,7 +2,7 @@
 {% block title %} Home {% endblock %}
 {% block content %}
  <!-- Hero Search Section Begin -->
- <div class="hero-search set-bg" data-setbg="{{url_for('static',filename='img/search-bg.jpg')}}">
+ <div class="hero-search set-bg" data-setbg="{{url_for('static',filename='images/search-bg.jpg')}}">
     <div class="container text-center" style="vertical-align: middle;">
         <br><br><br>
         <h1 class="text-white" style="font-size: 55px;">Welcome to Quick Recipe!</h1>
@@ -24,7 +24,13 @@
                             <div class="top-recipe-img set-bg" data-setbg="{{random_recipe.thumbnail_url}}"></div>
                         </a>
                         <div class="top-recipe-text">
-                            <div class="cat-name">Random Recipe</div>
+                            <div class="cat-name">
+                                {% if random_recipe.tags  %}
+                                    {{random_recipe.tags[0].display_name.replace('_',' ')}}
+                                {% else %}
+                                    Recipe
+                                {% endif %}
+                            </div>
                             <a href="{{url_for('search.recipes_details')}}">
                                 <h4>{{random_recipe.name}}</h4>
                             </a>
@@ -71,8 +77,7 @@
                 <div class="col-lg-12 text-center">
                     <div class="filter-item">
                         <ul>
-                            <li data-filter="*" class="active">All</li>
-                            <li data-filter=".mostpopular">Most popular</li>
+                            <li data-filter=".mostpopular" class="active">Most popular</li>
                             <li data-filter=".meatlover">Meat Lover</li>
                             <li data-filter=".glutenfree">Gluten Free</li>
                             <li data-filter=".vegetarian" >Vegetarian</li>
@@ -81,20 +86,6 @@
                 </div>
             </div>
             <div class="cf-filter" id="category-filter">
-                {% for recipe in recipes_vegetarian %}
-                <div class="cf-item mix all vegetarian">
-                    <div class="cf-item-pic">
-                        <a href="{{url_for('search.recipes_details')}}">
-                        <div class="set-bg img" data-setbg="{{recipe.thumbnail_url}}" style="width:256px;height:271.5px"></div>
-                        </a>
-                    </div>
-                    <div class="cf-item-text">
-                        <a href="{{url_for('search.recipes_details')}}">
-                            <h5>{{recipe.name}}</h5>
-                        </a>
-                    </div>
-                </div>
-                {% endfor %}
                 {% for recipe in recipes_most_popular %}
                 <div class="cf-item mix all mostpopular">
                     <div class="cf-item-pic">
@@ -133,6 +124,20 @@
                     <div class="cf-item-text">
                         <a href="{{url_for('search.recipes_details')}}">
                         <h5>{{recipe.name}}</h5>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+                {% for recipe in recipes_vegetarian %}
+                <div class="cf-item mix all vegetarian">
+                    <div class="cf-item-pic">
+                        <a href="{{url_for('search.recipes_details')}}">
+                        <div class="set-bg img" data-setbg="{{recipe.thumbnail_url}}" style="width:256px;height:271.5px"></div>
+                        </a>
+                    </div>
+                    <div class="cf-item-text">
+                        <a href="{{url_for('search.recipes_details')}}">
+                            <h5>{{recipe.name}}</h5>
                         </a>
                     </div>
                 </div>

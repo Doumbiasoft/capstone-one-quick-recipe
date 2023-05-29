@@ -13,7 +13,11 @@
         --------------------*/
         if ($('#category-filter').length > 0) {
             var containerEl = document.querySelector('#category-filter');
-            var mixer = mixitup(containerEl);
+            var mixer = mixitup(containerEl, {
+                load: {
+                    filter: '.mostpopular'
+                }
+            });
         }
         $(".categories-filter-section .filter-item ul li").on('click', function () {
             $(".categories-filter-section .filter-item ul li").removeClass('active');
@@ -73,4 +77,23 @@
 	--------------------- */
     $('#tag').niceSelect();
 
+    $("#scrollToTopBtn").click(function() {
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+        return false;
+     });
+
 })(jQuery);
+
+// Get the button
+let mybutton = document.getElementById("scrollToTopBtn");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > (document.body.scrollHeight/3) || document.documentElement.scrollTop > (document.body.scrollHeight/3)) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}

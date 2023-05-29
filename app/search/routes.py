@@ -31,19 +31,10 @@ def recipes():
         if tag is not None or recipe is not None:
             recipes_found = data_recipes_found.results
         elif tag is None and recipe is None:
-            #if len(data_recipes_found.results)>9:
-            #   recipes_found = sample(data_recipes_found.results, 9)
-            #else:
-            #    recipes_found = sample(data_recipes_found.results, len(data_recipes_found.results))
             recipes_found = data_recipes_found.results
-
         return render_template('search/recipes.html',recipes_found=recipes_found,form=form)
 
     data_recipes_found = get_data(url,headers=headers,params=querystring)
-    #if len(data_recipes_found.results)>9:
-    #    recipes_found = sample(data_recipes_found.results, 9)
-    #else:
-    #   recipes_found = sample(data_recipes_found.results, len(data_recipes_found.results))
     recipes_found = data_recipes_found.results
 
     return render_template('search/recipes.html',recipes_found=recipes_found,form=form)

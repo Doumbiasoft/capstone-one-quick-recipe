@@ -3,7 +3,7 @@
 
 {% block content %}
  <!-- Hero Search Section Begin -->
- <div class="hero-search set-bg" data-setbg="{{url_for('static',filename='img/search-bg.jpg')}}">
+ <div class="hero-search set-bg" data-setbg="{{url_for('static',filename='images/search-bg.jpg')}}">
     <div class="container text-center">
         <br><h2 class="text-white" style="font-size: 50px">Find a Recipe</h2><br>
         <div class="filter-table">
@@ -34,7 +34,24 @@
                         <div class="set-bg img" data-setbg="{{recipe.thumbnail_url}}" style="width:350px;height:340px"></div>
                     </a>
                     <div class="ri-text">
-                        <div class="cat-name">Recipe</div>
+                        <!-- {% if recipe.tags  %}
+                            {% for item in recipe.tags %}
+                            <div class="cat-name">
+                                {{item.display_name.replace('_',' ')}}
+                            </div>
+                            {% endfor %}
+                         {% else %}
+                            <div class="cat-name">
+                                Recipe
+                            </div>
+                         {% endif %} -->
+                        <div class="cat-name">
+                            {% if recipe.tags  %}
+                               {{recipe.tags[0].display_name.replace('_',' ')}}
+                            {% else %}
+                            Recipe
+                            {% endif %}
+                        </div>
                         <a href="{{url_for('search.recipes_details')}}">
                             <h4>{{recipe.name}}</h4>
                         </a>
