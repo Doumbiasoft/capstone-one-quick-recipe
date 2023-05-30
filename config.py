@@ -7,6 +7,7 @@ if database_URI.startswith("postgres://"):
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY','flask&quick&recipe&secret&key')
+    SESSION_TYPE = 'filesystem'
     SQLALCHEMY_DATABASE_URI = database_URI\
     or 'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False

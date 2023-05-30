@@ -1,9 +1,11 @@
-from app.extensions import Flask, db,DebugToolbarExtension
+from app.extensions import Flask, db,DebugToolbarExtension,Session
 from config import Config
 
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+    # Initialize the session extension
+    Session(app)
     DebugToolbarExtension(app)
     """Initialize Flask extensions here"""
     db.init_app(app)

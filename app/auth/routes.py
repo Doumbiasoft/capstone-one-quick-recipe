@@ -1,4 +1,4 @@
-from app.extensions import render_template,redirect,flash,url_for,abort,request,session
+from app.extensions import render_template,redirect,flash,url_for,abort,request
 from app.auth import bp
 from app.forms.auth.login import LoginForm
 from app.forms.auth.register import RegisterForm

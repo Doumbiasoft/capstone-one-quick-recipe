@@ -1,4 +1,5 @@
 from flask import Flask, render_template,redirect,flash,url_for,abort,request,g,session
+from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_debugtoolbar import DebugToolbarExtension
@@ -9,8 +10,9 @@ from wtforms.validators import InputRequired,Length
 import os
 import requests
 import datetime
+import json
 from api_key import api_key
-from helpers import Json2Object,get_data
+from helpers import Json2Object,get_data,Object2Json
 from random import randrange,sample
 
 

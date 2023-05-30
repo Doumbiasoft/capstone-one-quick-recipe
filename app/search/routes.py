@@ -1,4 +1,4 @@
-from app.extensions import render_template,redirect,flash,url_for,abort,request,session,API_URL_BASE,headers,get_data,sample
+from app.extensions import render_template,redirect,flash,url_for,abort,request,API_URL_BASE,headers,get_data,Json2Object,session
 from app.search import bp
 from app.forms.search.recipes import SearchForm
 
@@ -39,10 +39,16 @@ def recipes():
 
     return render_template('search/recipes.html',recipes_found=recipes_found,form=form)
 
-@bp.route('/recipes/details', methods=['GET','POST'])
+
+
+@bp.route('/recipes/details')
 def recipes_details():
     """Detail recipe view"""
-    return render_template('search/details.html')
+    json = session.get('recipe_item')
+    recipe = Json2Object(json)
+    #breakpoint()
+    return render_template('search/details.html',recipe=recipe)
+
 
 def get_type():
     seen = set()
