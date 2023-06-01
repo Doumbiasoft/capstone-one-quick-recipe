@@ -23,9 +23,14 @@
 
       <!--Social Buttons for Bootstrap-->
      <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap-social.css')}}" rel="stylesheet" >
-    <title>{% block title %} {% endblock %} - Quick Recipe</title>
+     <title>{% block title %} {% endblock %} - Quick Recipe</title>
+
 </head>
 <body>
+    <!--Define url for flask-->
+    <div id="url-post" data-url-post="{{url_for('search.recipes_item')}}"></div>
+    <div id="url-callback" data-url-callback="{{url_for('search.recipes_details')}}"></div>
+    <!--end Define url for flask-->
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>

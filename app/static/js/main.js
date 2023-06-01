@@ -1,7 +1,4 @@
 'use strict';
-
- const BASE_URL = "http://192.168.0.116:5000";
-
 (function ($) {
 
     /*------------------
@@ -99,8 +96,19 @@ function scrollFunction() {
     mybutton.style.display = "none";
   }
 }
+const url_post = $("#url-post").data('url-post');
+const url_callback = $("#url-callback").data('url-callback');
 
 $(".recipe-detail").on("click", async function (e) {
+    e.preventDefault();
     var recipe_item = $(this).data('obj');
-    await axios.post(`${BASE_URL}/search/recipes-item`, recipe_item);
+    await axios({
+        url: url_post,
+        method: "POST",
+        data: recipe_item,
+      }).then(function (response) {
+        if(response.data == "success"){
+            window.location = url_callback;
+        }
+      });
 });

@@ -30,7 +30,7 @@
             {% for recipe in recipes_found %}
             <div class="col-lg-4 col-sm-6 page-item">
                 <div class="recipe-item">
-                    <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
+                    <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="#">
                         <div class="set-bg img" data-setbg="{{recipe.thumbnail_url}}" style="width:350px;height:340px"></div>
                     </a>
                     <div class="ri-text">
@@ -41,7 +41,7 @@
                             Recipe
                             {% endif %}
                         </div>
-                        <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
+                        <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="#">
                             <h4>{{recipe.name}}</h4>
                         </a>
                         <p>

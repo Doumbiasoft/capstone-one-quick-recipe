@@ -21,16 +21,8 @@ def index():
     """get the maximum african recipes"""
     data_recipes_african = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"african"}) #african#Jollof Rice
 
-
     random_number = randrange(0, len(data_recipes_random.results) - 1)
     random_recipe = data_recipes_random.results[random_number]
-    
-    #test_obj = random_recipe
-    #breakpoint()
-    #test_json = Object2Json(test_obj)
-    #session['recipe_item'] = test_json
-
-    #breakpoint()
 
     if len(data_recipes_desert.results)>4:
         recipes_desert = sample(data_recipes_desert.results, 4)

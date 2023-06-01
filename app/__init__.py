@@ -4,11 +4,13 @@ from config import Config
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
+
     # Initialize the session extension
     Session(app)
     DebugToolbarExtension(app)
     """Initialize Flask extensions here"""
     db.init_app(app)
+
     """------------------END----------------------------------------------"""
 
     """Register blueprint here"""
@@ -38,17 +40,6 @@ def create_app(config_class=Config):
         def generate_float_range(x:float,y:float):
             return numpy.arange(x, y)
         return dict(generate_float_range=generate_float_range)
-
-
-    @app.after_request
-    def add_header(req):
-        """Add non-caching headers on every request."""
-
-        req.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-        req.headers["Pragma"] = "no-cache"
-        req.headers["Expires"] = "0"
-        req.headers['Cache-Control'] = 'public, max-age=0'
-        return req
 
 
     return app
