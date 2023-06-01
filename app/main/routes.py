@@ -1,5 +1,5 @@
 from app.main import bp
-from app.extensions import API_URL_BASE,headers,get_data,render_template,randrange,sample,Json2Object,Object2Json,session
+from app.extensions import API_URL_BASE,headers,get_data,render_template,randrange,sample,Json2Object,Object2Json,session,request,redirect,url_for
 
 
 @bp.route('/')
@@ -25,9 +25,10 @@ def index():
     random_number = randrange(0, len(data_recipes_random.results) - 1)
     random_recipe = data_recipes_random.results[random_number]
     
-    test_obj = data_recipes_desert.results[0]
-    test_json = Object2Json(test_obj)
-    session['recipe_item'] = test_json
+    #test_obj = random_recipe
+    #breakpoint()
+    #test_json = Object2Json(test_obj)
+    #session['recipe_item'] = test_json
 
     #breakpoint()
 
@@ -60,7 +61,6 @@ def index():
         recipes_african = sample(data_recipes_african.results, 2)
     else:
         recipes_african = sample(data_recipes_african.results, len(data_recipes_african.results))
-    #breakpoint()
     
     return render_template('index.html',random_recipe = random_recipe, recipes_desert = recipes_desert,
                            recipes_vegetarian=recipes_vegetarian,recipes_most_popular=recipes_most_popular,

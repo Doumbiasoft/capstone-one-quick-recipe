@@ -1,4 +1,4 @@
-from flask import Flask, render_template,redirect,flash,url_for,abort,request,g,session
+from flask import Flask, render_template,redirect,flash,url_for,abort,request,g,session,jsonify
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
@@ -12,9 +12,9 @@ import requests
 import datetime
 import json
 from api_key import api_key
-from helpers import Json2Object,get_data,Object2Json
+from helpers import Json2Object,get_data,Object2Json,convert_json
 from random import randrange,sample
-
+import numpy
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()

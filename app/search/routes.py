@@ -1,6 +1,8 @@
-from app.extensions import render_template,redirect,flash,url_for,abort,request,API_URL_BASE,headers,get_data,Json2Object,session
+from app.extensions import render_template,redirect,flash,url_for,abort,request,API_URL_BASE,headers,get_data,Json2Object,session,numpy,Object2Json,convert_json,jsonify,json
 from app.search import bp
 from app.forms.search.recipes import SearchForm
+import ast
+
 
 url = f"{API_URL_BASE}/recipes/list"
 url_tags = f"{API_URL_BASE}/tags/list"
@@ -39,16 +41,28 @@ def recipes():
 
     return render_template('search/recipes.html',recipes_found=recipes_found,form=form)
 
+@bp.route('/recipes-item', methods=['POST'])
+def recipes_item():
+    """Detail recipe view"""
+
+    data = request.get_data()
+    json_object = convert_json(data)
+    json_string = json.dumps(json_object)
+    session['recipe_item'] = json_string
+
+    return redirect(url_for('search.recipes_details'))
 
 
 @bp.route('/recipes/details')
 def recipes_details():
     """Detail recipe view"""
-    json = session.get('recipe_item')
-    recipe = Json2Object(json)
-    #breakpoint()
-    return render_template('search/details.html',recipe=recipe)
 
+    json_object = session.get('recipe_item')
+    json_string = json.dumps(json_object)
+    json_object = Json2Object(json_string)
+    recipe = Json2Object(json_object)
+
+    return render_template('search/details.html',recipe=recipe)
 
 def get_type():
     seen = set()

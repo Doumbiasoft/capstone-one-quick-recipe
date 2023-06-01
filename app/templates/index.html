@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="top-recipe-item large-item">
-                        <a href="{{url_for('search.recipes_details')}}">
+                        <a class="recipe-detail" data-obj="{{obj_to_json(random_recipe)}}" href="{{url_for('search.recipes_details')}}">
                             <div class="top-recipe-img set-bg" data-setbg="{{random_recipe.thumbnail_url}}"></div>
                         </a>
                         <div class="top-recipe-text">
@@ -31,7 +31,7 @@
                                     Recipe
                                 {% endif %}
                             </div>
-                            <a href="{{url_for('search.recipes_details')}}">
+                            <a class="recipe-detail" data-obj="{{obj_to_json(random_recipe)}}" href="{{url_for('search.recipes_details')}}">
                                 <h4>{{random_recipe.name}}</h4>
                             </a>
                             <p>
@@ -45,14 +45,14 @@
                     <div class="top-recipe-item">
                         <div class="row">
                             <div class="col-sm-4">
-                                <a href="{{url_for('search.recipes_details')}}">
+                                <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
                                     <div class="top-recipe-img set-bg img" data-setbg="{{recipe.thumbnail_url}}"></div>
                                 </a>
                             </div>
                             <div class="col-sm-8">
                                 <div class="top-recipe-text">
                                     <div class="cat-name">Dessert</div>
-                                    <a href="{{url_for('search.recipes_details')}}">
+                                    <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
                                         <h4>{{recipe.name}}</h4>
                                     </a>
                                     <p>
@@ -89,12 +89,12 @@
                 {% for recipe in recipes_most_popular %}
                 <div class="cf-item mix all mostpopular">
                     <div class="cf-item-pic">
-                        <a href="{{url_for('search.recipes_details')}}">
+                        <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
                             <div class="set-bg img" data-setbg="{{recipe.thumbnail_url}}" style="width:256px;height:271.5px"></div>
                         </a>
                     </div>
                     <div class="cf-item-text">
-                        <a href="{{url_for('search.recipes_details')}}">
+                        <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
                             <h5>{{recipe.name}}</h5>
                         </a>
                     </div>
@@ -103,12 +103,12 @@
                 {% for recipe in recipes_meat_lover %}
                 <div class="cf-item mix all meatlover">
                     <div class="cf-item-pic">
-                        <a href="{{url_for('search.recipes_details')}}">
+                        <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
                             <div class="set-bg img" data-setbg="{{recipe.thumbnail_url}}" style="width:256px;height:271.5px"></div>
                         </a>
                     </div>
                     <div class="cf-item-text">
-                        <a href="{{url_for('search.recipes_details')}}">
+                        <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
                             <h5>{{recipe.name}}</h5>
                         </a>
                     </div>
@@ -117,12 +117,12 @@
                 {% for recipe in recipes_gluten_free %}
                 <div class="cf-item mix all glutenfree">
                     <div class="cf-item-pic">
-                        <a href="{{url_for('search.recipes_details')}}">
+                        <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
                             <div class="set-bg img" data-setbg="{{recipe.thumbnail_url}}" style="width:256px;height:271.5px"></div>
                         </a>
                     </div>
                     <div class="cf-item-text">
-                        <a href="{{url_for('search.recipes_details')}}">
+                        <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
                         <h5>{{recipe.name}}</h5>
                         </a>
                     </div>
@@ -131,12 +131,12 @@
                 {% for recipe in recipes_vegetarian %}
                 <div class="cf-item mix all vegetarian">
                     <div class="cf-item-pic">
-                        <a href="{{url_for('search.recipes_details')}}">
+                        <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
                         <div class="set-bg img" data-setbg="{{recipe.thumbnail_url}}" style="width:256px;height:271.5px"></div>
                         </a>
                     </div>
                     <div class="cf-item-text">
-                        <a href="{{url_for('search.recipes_details')}}">
+                        <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
                             <h5>{{recipe.name}}</h5>
                         </a>
                     </div>
@@ -158,12 +158,12 @@
                 <div class="col-lg-6">
                     <div class="fr-item">
                         <div class="fr-item-img" align="center">
-                            <a href="{{url_for('search.recipes_details')}}">
+                            <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
                                 <div class="set-bg" data-setbg="{{recipe.thumbnail_url}}" style="width:280px;height:280px;border-radius:50%;"></div>
                             </a>
                         </div>
                         <div class="fr-item-text">
-                            <a href="{{url_for('search.recipes_details')}}">
+                            <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
                                 <h4>{{recipe.name}}</h4>
                             </a>
                             <p> <div class="set-limit" data-html="{{recipe.description}}"></div></p>

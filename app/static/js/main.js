@@ -99,3 +99,8 @@ function scrollFunction() {
     mybutton.style.display = "none";
   }
 }
+
+$(".recipe-detail").on("click", async function (e) {
+    var recipe_item = $(this).data('obj');
+    await axios.post(`${BASE_URL}/search/recipes-item`, recipe_item);
+});

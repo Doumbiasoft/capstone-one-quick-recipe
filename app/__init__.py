@@ -1,4 +1,4 @@
-from app.extensions import Flask, db,DebugToolbarExtension,Session
+from app.extensions import Flask, db,DebugToolbarExtension,Session,Object2Json,numpy
 from config import Config
 
 def create_app(config_class=Config):
@@ -26,5 +26,29 @@ def create_app(config_class=Config):
     @app.route('/test/')
     def test_page():
         return '<h1>Testing the Flask Application Factory Pattern</h1>'
+
+    @app.context_processor
+    def utility_simplenamespace():
+        def obj_to_json(obj):
+            return Object2Json(obj)
+        return dict(obj_to_json=obj_to_json)
+
+    @app.context_processor
+    def utility_processor():
+        def generate_float_range(x:float,y:float):
+            return numpy.arange(x, y)
+        return dict(generate_float_range=generate_float_range)
+
+
+    @app.after_request
+    def add_header(req):
+        """Add non-caching headers on every request."""
+
+        req.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        req.headers["Pragma"] = "no-cache"
+        req.headers["Expires"] = "0"
+        req.headers['Cache-Control'] = 'public, max-age=0'
+        return req
+
 
     return app

@@ -30,21 +30,10 @@
             {% for recipe in recipes_found %}
             <div class="col-lg-4 col-sm-6 page-item">
                 <div class="recipe-item">
-                    <a href="{{url_for('search.recipes_details')}}">
+                    <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
                         <div class="set-bg img" data-setbg="{{recipe.thumbnail_url}}" style="width:350px;height:340px"></div>
                     </a>
                     <div class="ri-text">
-                        <!-- {% if recipe.tags  %}
-                            {% for item in recipe.tags %}
-                            <div class="cat-name">
-                                {{item.display_name.replace('_',' ')}}
-                            </div>
-                            {% endfor %}
-                         {% else %}
-                            <div class="cat-name">
-                                Recipe
-                            </div>
-                         {% endif %} -->
                         <div class="cat-name">
                             {% if recipe.tags  %}
                                {{recipe.tags[0].display_name.replace('_',' ')}}
@@ -52,7 +41,7 @@
                             Recipe
                             {% endif %}
                         </div>
-                        <a href="{{url_for('search.recipes_details')}}">
+                        <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="{{url_for('search.recipes_details')}}">
                             <h4>{{recipe.name}}</h4>
                         </a>
                         <p>
