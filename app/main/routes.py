@@ -1,5 +1,5 @@
 from app.main import bp
-from app.extensions import API_URL_BASE,headers,get_data,render_template,randrange,sample,Json2Object,Object2Json,session,request,redirect,url_for
+from app.extensions import API_URL_BASE,headers,get_data,render_template,randrange,sample,Json2Object,Object2Json,session,request,redirect,url_for,abort
 
 
 @bp.route('/')
@@ -61,4 +61,5 @@ def index():
 
 @bp.route('/recipes/favorites')
 def recipes_favorites():
+    abort(401)
     return render_template('favorites.html')

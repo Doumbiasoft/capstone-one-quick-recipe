@@ -1,4 +1,4 @@
-from app.extensions import Flask, db,DebugToolbarExtension,Session,Object2Json,numpy
+from app.extensions import Flask, db,DebugToolbarExtension,Session,Object2Json,numpy,render_template
 from config import Config
 
 def create_app(config_class=Config):
@@ -28,6 +28,15 @@ def create_app(config_class=Config):
     @app.route('/test/')
     def test_page():
         return '<h1>Testing the Flask Application Factory Pattern</h1>'
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('404.html'), 404
+
+    @app.errorhandler(401)
+    def access_denied(e):
+        return render_template('401.html'), 401
+
 
     @app.context_processor
     def utility_simplenamespace():

@@ -844,6 +844,7 @@ ol {
 .footer-section {
 	background: #EAEDF2;
 	padding-top: 70px;
+	bottom: 0;
 }
 
 .footer-section .fs-left {
