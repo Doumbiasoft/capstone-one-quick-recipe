@@ -13,7 +13,7 @@ tags = data_tags.results
 def recipes():
     """Search view"""
 
-    querystring = {"from":"0","size":"100"}
+    querystring = {"from":"0","size":"20"}
 
     form = SearchForm()
     form.tags.choices = get_tag_tuple()
@@ -102,4 +102,11 @@ def get_tag_tuple():
         if obj.name not in seen:
             unique_list.append((f"{obj.name}",f"{obj.display_name.lower()}"))
             seen.add(obj.name)
-    return unique_list
+    return sort_tuple(unique_list)
+
+def sort_tuple(tup):
+
+    # reverse = None (Sorts in Ascending order)
+    # key is set to sort using second element of
+    # sublist lambda has been used
+    return(sorted(tup, key = lambda x: x[1]))
