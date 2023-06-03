@@ -19,9 +19,8 @@ import numpy
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 
-CURR_USER_KEY = "curr_user"
-CURR_USER_FULLNAME = "curr_user_fullname"
-CURR_USER_IS_ADMIN = "curr_user_is_admin"
+RECIPE_ITEM = "recipe_item"
+CURR_USER_KEY = "curr_user_key"
 API_KEY = os.environ.get('API_KEY',api_key)
 API_URL_BASE ="https://tasty.p.rapidapi.com"
 headers = {

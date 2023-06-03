@@ -98,6 +98,10 @@ function scrollFunction() {
 }
 const url_post = $("#url-post").data('url-post');
 const url_callback = $("#url-callback").data('url-callback');
+const logout_url = $("#logout-url").data('logout-url');
+const home_url = $("#home-url").data('home-url');
+const auth_url = $("#auth-url").data('auth-url');
+
 
 $(".recipe-detail").on("click", async function (e) {
     e.preventDefault();
@@ -109,6 +113,17 @@ $(".recipe-detail").on("click", async function (e) {
       }).then(function (response) {
         if(response.data == "success"){
             window.location = url_callback;
+        }
+      });
+});
+$(".logout").on("click", async function (e) {
+    e.preventDefault();
+    await axios({
+        url: logout_url,
+        method: "POST",
+      }).then(function (response) {
+        if(response.data == "success"){
+            window.location = auth_url;
         }
       });
 });

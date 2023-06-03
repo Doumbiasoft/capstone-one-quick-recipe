@@ -6,7 +6,8 @@ class User(db.Model):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key = True, autoincrement=True)
-    full_name = db.Column(db.String(255), nullable = False)
+    first_name = db.Column(db.String(255), nullable = False)
+    last_name = db.Column(db.String(255), nullable = False)
     email = db.Column(db.String(50), unique = True, nullable = False)
     password = db.Column(db.Text, nullable = False)
     password_reset_token = db.Column(db.Text)
@@ -21,8 +22,12 @@ class User(db.Model):
     is_active = db.Column(db.Boolean, nullable = False, default = True)
     is_admin = db.Column(db.Boolean, nullable = False, default = False)
 
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
     def __repr__(self):
-        return f"<User {self.id} {self.full_name} {self.email}>"
+        return f"<User {self.id} {self.first_name} {self.last_name} {self.email} {self.is_admin}>"
     @classmethod
     def hash_function(cls,value):
       """This function will encrypt any value in input parameters"""
@@ -31,6 +36,71 @@ class User(db.Model):
     def hash_function_check(cls,old_password_hash,new_password_hash):
             """This function will check any encrypt value in input parameters"""
             return bcrypt.check_password_hash(old_password_hash, new_password_hash)
+    @classmethod
+    def register(cls, first_name, last_name, email, password,is_oauth):
+        """Register user w/hashed password & return user."""
+
+        password_hashed = bcrypt.generate_password_hash(password).decode("utf8")
+
+        # return instance of user w/username and hashed pwd
+        return cls(first_name=first_name, last_name=last_name,email=email,password=password_hashed,is_oauth = is_oauth)
+
+    @classmethod
+    def login(cls, email, password):
+        """Validate that user exists & password is correct. Return user if valid; else return False."""
+
+        user = User.query.filter_by(email=email).first()
+
+        if user and bcrypt.check_password_hash(user.password, password):
+            #return user instance
+            return user
+        else:
+            return False
+
+    def get_users():
+        return User.query
+
+    def get_user_by_id(id):
+        return User.query.get_or_404(id)
+
+    def add_users(user):
+        final_user=user
+        db.session.add(final_user)
+        try:
+            db.session.commit()
+        except:
+            return False
+        return final_user
+
+    def update_users(id, firstname, lastname):
+        user = User.query.get_or_404(id)
+        user.first_name = firstname
+        user.last_name = lastname
+        db.session.add(user)
+        try:
+            db.session.commit()
+        except:
+            return False
+        return user
+
+    def delete_users(id):
+        user = User.query.get_or_404(id)
+        db.session.delete(user)
+        try:
+            db.session.commit()
+        except:
+            return False
+        return True
+
+    def update_password(id, password):
+        user = User.query.get_or_404(id)
+        user.password = password
+        db.session.add(user)
+        try:
+            db.session.commit()
+        except:
+            return False
+        return True
 
 
       

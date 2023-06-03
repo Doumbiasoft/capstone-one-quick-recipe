@@ -1,5 +1,5 @@
 from app.main import bp
-from app.extensions import API_URL_BASE,headers,get_data,render_template,randrange,sample,Json2Object,Object2Json,session,request,redirect,url_for,abort
+from app.extensions import API_URL_BASE,headers,get_data,render_template,randrange,sample,Json2Object,Object2Json,session,request,redirect,url_for,abort,CURR_USER_KEY
 
 
 @bp.route('/')
@@ -54,12 +54,15 @@ def index():
     else:
         recipes_african = sample(data_recipes_african.results, len(data_recipes_african.results))
     
-    return render_template('index.html',random_recipe = random_recipe, recipes_desert = recipes_desert,
+    return render_template('main/index.html',random_recipe = random_recipe, recipes_desert = recipes_desert,
                            recipes_vegetarian=recipes_vegetarian,recipes_most_popular=recipes_most_popular,
                            recipes_meat_lover=recipes_meat_lover,recipes_gluten_free=recipes_gluten_free,
                            recipes_african=recipes_african)
 
 @bp.route('/recipes/favorites')
 def recipes_favorites():
-    abort(401)
-    return render_template('favorites.html')
+    if CURR_USER_KEY not in session:
+                abort(401)
+
+
+    return render_template('main/favorites.html')

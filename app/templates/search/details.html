@@ -23,7 +23,7 @@
             </div>
            <div class="container set-bg" style="background-color:#F5F6FA;padding:0px;" data-setbg="{{recipe.thumbnail_url}}">
             <div style="width:100%;backdrop-filter: blur(5px);">
-                <img src="{{recipe.thumbnail_url}}" style="height:500px;padding:10px;" alt="">
+                <img src="{{recipe.thumbnail_url}}" style="height:540px;padding:0px;" alt="">
             </div>
            </div>
         </div>
@@ -67,8 +67,10 @@
                     </div>
                     <div class="ingredient-list">
                         <div class="recipe-btn">
+                            {% if g.user %}
                             <a href="#"> <i class="fa fa-print text-white text-white"></i>&nbsp;Print Recipe</a>
                             <a href="#" class="black-btn"> <i class="fa fa-bookmark text-white text-white"></i>&nbsp;Pin Recipe</a>
+                            {% endif %}
                         </div>
                         <div class="list-item">
                             <h5>Ingredients</h5>

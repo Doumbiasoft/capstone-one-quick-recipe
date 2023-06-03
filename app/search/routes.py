@@ -1,4 +1,4 @@
-from app.extensions import render_template,redirect,flash,url_for,abort,request,API_URL_BASE,headers,get_data,Json2Object,session,convert_json,jsonify,json
+from app.extensions import render_template,redirect,flash,url_for,abort,request,API_URL_BASE,headers,get_data,Json2Object,session,convert_json,jsonify,json,RECIPE_ITEM
 from app.search import bp
 from app.forms.search.recipes import SearchForm
 
@@ -17,23 +17,24 @@ def recipes():
 
     form = SearchForm()
     form.tags.choices = get_tag_tuple()
-    if form.validate_on_submit():
+    if request.method == 'POST':
+        if form.validate_on_submit():
 
-        recipe = form.recipe.data
-        tag = form.tags.data
+            recipe = form.recipe.data
+            tag = form.tags.data
 
-        if tag is not None:
-            querystring["tags"] = tag.lower()
-        if recipe is not None:
-            querystring["q"] = recipe.lower()
+            if tag is not None:
+                querystring["tags"] = tag.lower()
+            if recipe is not None:
+                querystring["q"] = recipe.lower()
 
 
-        data_recipes_found = get_data(url,headers=headers,params=querystring)
-        if tag is not None or recipe is not None:
-            recipes_found = data_recipes_found.results
-        elif tag is None and recipe is None:
-            recipes_found = data_recipes_found.results
-        return render_template('search/recipes.html',recipes_found=recipes_found,form=form)
+            data_recipes_found = get_data(url,headers=headers,params=querystring)
+            if tag is not None or recipe is not None:
+                recipes_found = data_recipes_found.results
+            elif tag is None and recipe is None:
+                recipes_found = data_recipes_found.results
+            return render_template('search/recipes.html',recipes_found=recipes_found,form=form)
 
     data_recipes_found = get_data(url,headers=headers,params=querystring)
     recipes_found = data_recipes_found.results
@@ -48,7 +49,9 @@ def recipes_item():
         data = request.get_data()
         json_object = convert_json(data)
         json_string = json.dumps(json_object)
-        session['recipe_item'] = json_string
+        session[RECIPE_ITEM] = json_string
+    else:
+        abort(401)
 
     return (jsonify("success"), 201)
 
@@ -58,11 +61,13 @@ def recipes_item():
 def recipes_details():
     """Detail recipe view"""
     if request.method == 'GET':
-        if 'recipe_item' in session:
-            json_object = session.get('recipe_item')
+        if RECIPE_ITEM in session:
+            json_object = session.get(RECIPE_ITEM)
             json_string = json.dumps(json_object)
             json_object = Json2Object(json_string)
             recipe = Json2Object(json_object)
+    else:
+        abort(401)
 
     return render_template('search/details.html',recipe=recipe)
 

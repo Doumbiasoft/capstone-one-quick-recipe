@@ -30,6 +30,9 @@
     <!--Define url for flask-->
     <div id="url-post" data-url-post="{{url_for('search.recipes_item')}}"></div>
     <div id="url-callback" data-url-callback="{{url_for('search.recipes_details')}}"></div>
+    <div id="logout-url" data-logout-url="{{ url_for('auth.logout') }}"></div>
+    <div id="home-url" data-home-url="{{ url_for('main.index') }}"></div>
+    <div id="auth-url" data-auth-url="{{ url_for('auth.authentication') }}"></div>
     <!--end Define url for flask-->
     <!-- Page Preloder -->
     <div id="preloder">
@@ -46,14 +49,17 @@
                     <ul>
                         <li id="link_home"><a href="{{ url_for('main.index') }}"><i class="fa fas fa-home" style="font-size: x-large;"></i>&nbsp;Home</a></li>
                         <li id="link_recipes"><a href="{{ url_for('search.recipes') }}"><i class="fa fa-file-text" style="font-size: large;"></i>&nbsp;Recipes</a></li>
+                        {% if not g.user %}
+                        <li id="link_auth"><a href="{{ url_for('auth.authentication') }}"><i class="fa fa-user" style="font-size: large;"></i>&nbsp;Login - Register</a></li>
+                        {% else %}
                         <li id="link_favorite_recipes"><a href="{{ url_for('main.recipes_favorites') }}"><i class="fa fa-bookmark" style="font-size: large;"></i>&nbsp;Favorites</a></li>
-                        <li id="link_auth"><a href="{{ url_for('auth.authentication') }}"><i class="fa fa-user" style="font-size: large;"></i>&nbsp;Sign Up/Log In</a></li>
-                        <!-- <li style="cursor: pointer;font-size: 20px;"><img class="rounded-circle" width="35" height="35" alt="icon" src="https://qph.cf2.quoracdn.net/main-qimg-6d72b77c81c9841bd98fc806d702e859-lq"/>&nbsp;&nbsp;<b>Mouhamed Doumbia</b>
+                        <li style="cursor: pointer;font-size: large"><img class="rounded-circle" width="35" height="35" alt="icon" src="{{url_for('static',filename='images/user.png')}}"/>&nbsp;&nbsp;<b>{{ g.user.full_name}}</b>
                             <ul class="sub-menu">
                                 <li><a href="#"><i class="fa fa-user-circle"></i>&nbsp;&nbsp;Account</a></li>
-                                <li><a href="#"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
+                                <li><a class="logout" href="#"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Logout</a></li>
                             </ul>
-                        </li> -->
+                        </li>
+                        {% endif %}
                     </ul>
                 </nav>
             </div>
@@ -63,13 +69,11 @@
     <!-- Header End -->
     <div class="spad-mid"><hr class="hr-line"></div>
     <!--flash message-->
-    <div>
+    <div class="text-center m-2">
         {% for type, msg in get_flashed_messages(with_categories=true) %}
-        <div class="alert alert-{{ type }} alert-dismissible" role="alert">
-            <div>{{ msg }}</div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div class="alert alert-{{ type }} alert-dismissible alert-sm" role="alert">
+            <div style="font-size:x-large">{{ msg }}</div>
        </div>
-        <br/>
         {% endfor %}
     </div>
      <!--End flash message-->

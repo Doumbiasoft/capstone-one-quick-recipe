@@ -1,5 +1,6 @@
-from app.extensions import Flask, db,DebugToolbarExtension,Session,Object2Json,numpy,render_template
+from app.extensions import Flask, db,DebugToolbarExtension,Session,Object2Json,numpy,render_template,CURR_USER_KEY,session,g
 from config import Config
+from app.models.users import User
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -28,6 +29,15 @@ def create_app(config_class=Config):
     @app.route('/test/')
     def test_page():
         return '<h1>Testing the Flask Application Factory Pattern</h1>'
+    
+    @app.before_request
+    def add_user_to_g():
+        """If we're logged in, add curr user to Flask global."""
+
+        if CURR_USER_KEY in session:
+            g.user = User.query.get(session[CURR_USER_KEY])
+        else:
+            g.user = None
 
     @app.errorhandler(404)
     def page_not_found(e):
