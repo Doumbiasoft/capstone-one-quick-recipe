@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.sql import func
+from sqlalchemy.dialects.postgresql import JSONB
 from flask_wtf import FlaskForm
 from wtforms import StringField,PasswordField,EmailField,TextAreaField,BooleanField,SelectField
 from wtforms.validators import InputRequired,Length
@@ -16,8 +17,15 @@ from helpers import Json2Object,get_data,Object2Json,convert_json
 from random import randrange,sample
 import numpy
 
+
 db = SQLAlchemy()
 bcrypt = Bcrypt()
+#-------------Admin info-----------
+ADMIN_FIRST_NAME='ADMIN_FIRST_NAME'
+ADMIN_LAST_NAME='ADMIN_LAST_NAME'
+ADMIN_EMAIL='ADMIN_EMAIL'
+ADMIN_PASSWORD='ADMIN_PASSWORD'
+#---------------end-----------------
 
 RECIPE_ITEM = "recipe_item"
 CURR_USER_KEY = "curr_user_key"

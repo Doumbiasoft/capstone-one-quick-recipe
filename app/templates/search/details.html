@@ -69,7 +69,11 @@
                         <div class="recipe-btn">
                             {% if g.user %}
                             <a href="#"> <i class="fa fa-print text-white text-white"></i>&nbsp;Print Recipe</a>
-                            <a href="#" class="black-btn"> <i class="fa fa-bookmark text-white text-white"></i>&nbsp;Pin Recipe</a>
+                                {% if g.user.is_favorite(recipe.id) %}
+                                <a href="#" class="black-btn pin-recipe" data-obj="{{obj_to_json(recipe)}}"><i class="fa fa-heart text-danger"></i>&nbsp;Unpin Recipe</a>
+                                {% else %}
+                                <a href="#" class="black-btn pin-recipe" data-obj="{{obj_to_json(recipe)}}"><i class="fa fa-heart text-white"></i>&nbsp;Pin Recipe</a>
+                                {% endif %}
                             {% endif %}
                         </div>
                         <div class="list-item">
@@ -164,7 +168,7 @@
 {% endblock %}
 
 {% block scripts %}
-    $('#link_recipes').toggleClass('active');
+   <!--  $('#link_recipes').toggleClass('active'); -->
     $('#back').on('click', function(){
         history.back();
     });

@@ -1,6 +1,6 @@
 from app.main import bp
-from app.extensions import API_URL_BASE,headers,get_data,render_template,randrange,sample,Json2Object,Object2Json,session,request,redirect,url_for,abort,CURR_USER_KEY
-
+from app.extensions import API_URL_BASE,headers,get_data,render_template,randrange,sample,Json2Object,Object2Json,session,request,g,redirect,url_for,abort,CURR_USER_KEY,db,jsonify,json,convert_json
+from app.models.recipe_favorites import RecipeFavorite
 
 @bp.route('/')
 def index():
@@ -64,5 +64,41 @@ def recipes_favorites():
     if CURR_USER_KEY not in session:
                 abort(401)
 
-
     return render_template('main/favorites.html')
+
+
+@bp.route('/recipes/pin', methods=["POST"])
+def add_pin():
+    """Pin and unpin Recipe."""
+
+
+    """Detail recipe view"""
+    if request.method == 'POST':
+
+        data = request.get_data()
+        json_object = convert_json(data)
+        json_string = json.dumps(json_object)
+        final_object = Json2Object(json_string)
+
+        base_data=json_string
+        recipe_id=final_object.id
+        name=final_object.name
+        thumbnail_url=final_object.thumbnail_url
+        description=final_object.description
+        tag = final_object.tags[0].display_name.replace('_',' ')
+
+        pin = RecipeFavorite.query.filter(RecipeFavorite.user_id==g.user.id,RecipeFavorite.recipe_id==recipe_id).first()
+
+        if pin:
+            db.session.delete(pin)
+            db.session.commit()
+
+        else:
+            pin = RecipeFavorite(user_id=g.user.id,recipe_id=recipe_id,name=name,thumbnail_url=thumbnail_url,description=description,data=base_data,tag=tag)
+            db.session.add(pin)
+            db.session.commit()
+
+    else:
+        abort(401)
+
+    return (jsonify("success"), 201)

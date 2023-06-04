@@ -1,4 +1,6 @@
 from app.extensions import db,bcrypt,func
+from app.models.recipe_favorites import RecipeFavorite
+from app.models.recipe_review import RecipeReview
 
 class User(db.Model):
     """User Model"""
@@ -21,6 +23,9 @@ class User(db.Model):
     updated_at = db.Column(db.DateTime(timezone = True),server_default = func.now())
     is_active = db.Column(db.Boolean, nullable = False, default = True)
     is_admin = db.Column(db.Boolean, nullable = False, default = False)
+    recipe_favorites = db.relationship("RecipeFavorite", backref="user", cascade="all, delete-orphan")
+    recipe_reviews = db.relationship("RecipeReview", backref="user", cascade="all, delete-orphan")
+
 
     @property
     def full_name(self):
@@ -101,6 +106,12 @@ class User(db.Model):
         except:
             return False
         return True
+
+    def is_favorite(self,recipe_id):
+        """ Is this user has a favorite recipe? """
+
+        favorites = [favorite for favorite in self.recipe_favorites if favorite.recipe_id == recipe_id and favorite.user_id == self.id]
+        return len(favorites) == 1
 
 
       

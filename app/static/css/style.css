@@ -2104,7 +2104,7 @@ ol {
 
 .contact-form input {
 	width: 100%;
-	height: 64px;
+	height: 50px;
 	border: 1px solid #F5F6FA;
 	background: #F5F6FA;
 	margin-bottom: 15px;
@@ -2169,7 +2169,7 @@ ol {
 }
 
 .contact-form button {
-	padding: 18px 85px;
+	padding: 10px;
 	display: inline-block;
 	background: #e59038;
 	color: #fff;

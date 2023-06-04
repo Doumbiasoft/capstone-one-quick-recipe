@@ -33,6 +33,7 @@
     <div id="logout-url" data-logout-url="{{ url_for('auth.logout') }}"></div>
     <div id="home-url" data-home-url="{{ url_for('main.index') }}"></div>
     <div id="auth-url" data-auth-url="{{ url_for('auth.authentication') }}"></div>
+    <div id="pin-url" data-pin-url="{{ url_for('main.add_pin') }}"></div>
     <!--end Define url for flask-->
     <!-- Page Preloder -->
     <div id="preloder">
@@ -47,16 +48,16 @@
             <div class="nav-menu">
                 <nav class="main-menu mobile-menu">
                     <ul>
-                        <li id="link_home"><a href="{{ url_for('main.index') }}"><i class="fa fas fa-home" style="font-size: x-large;"></i>&nbsp;Home</a></li>
-                        <li id="link_recipes"><a href="{{ url_for('search.recipes') }}"><i class="fa fa-file-text" style="font-size: large;"></i>&nbsp;Recipes</a></li>
+                        <li id="link_home"><a href="{{ url_for('main.index') }}"><i class="fa fa-rss" style="font-size: large;"></i>&nbsp;Feed</a></li>
+                        <li id="link_recipes"><a href="{{ url_for('search.recipes') }}"><i class="fa fa-list-alt" style="font-size: large;"></i>&nbsp;Recipes</a></li>
                         {% if not g.user %}
-                        <li id="link_auth"><a href="{{ url_for('auth.authentication') }}"><i class="fa fa-user" style="font-size: large;"></i>&nbsp;Login - Register</a></li>
+                        <li id="link_auth"><a href="{{ url_for('auth.authentication') }}"><i class="fa fa-user" style="font-size: large;"></i>&nbsp;Log in - Sign up</a></li>
                         {% else %}
-                        <li id="link_favorite_recipes"><a href="{{ url_for('main.recipes_favorites') }}"><i class="fa fa-bookmark" style="font-size: large;"></i>&nbsp;Favorites</a></li>
+                        <li id="link_favorite_recipes"><a href="{{ url_for('main.recipes_favorites') }}"><i class="fa fa-heart" style="font-size: large;"></i>&nbsp;Favorites</a></li>
                         <li style="cursor: pointer;font-size: large"><img class="rounded-circle" width="35" height="35" alt="icon" src="{{url_for('static',filename='images/user.png')}}"/>&nbsp;&nbsp;<b>{{ g.user.full_name}}</b>
                             <ul class="sub-menu">
-                                <li><a href="#"><i class="fa fa-user-circle"></i>&nbsp;&nbsp;Account</a></li>
-                                <li><a class="logout" href="#"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Logout</a></li>
+                                <li><a href="#"><i class="fa fa-user"></i>&nbsp;&nbsp;Account</a></li>
+                                <li><a class="logout" href="#"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;Sign out</a></li>
                             </ul>
                         </li>
                         {% endif %}
@@ -71,8 +72,8 @@
     <!--flash message-->
     <div class="text-center m-2">
         {% for type, msg in get_flashed_messages(with_categories=true) %}
-        <div class="alert alert-{{ type }} alert-dismissible alert-sm" role="alert">
-            <div style="font-size:x-large">{{ msg }}</div>
+        <div class="alert alert-{{ type }} alert-dismissible alert-sm" role="alert" style="height: 30%;">
+            <div >{{ msg }}</div>
        </div>
         {% endfor %}
     </div>

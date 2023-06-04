@@ -5186,7 +5186,11 @@ a.badge-dark.focus,a.badge-dark:focus {
 .alert-dark .alert-link {
     color: #040505
 }
-
+.alert-quick-recipe {
+    color: #856404;
+    background-color: #fff4e8;
+    border-color: #f7c897;
+  }
 @-webkit-keyframes progress-bar-stripes {
     from {
         background-position: 1rem 0

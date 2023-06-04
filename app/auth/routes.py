@@ -9,7 +9,6 @@ from app.models.users import User
 
 @bp.route('/authentication', methods=['GET','POST'])
 def authentication():
-    #clear_session()
     """authentication view for user login and sign up"""
     tab_one="active"
     tab_selected_one="true"
@@ -19,7 +18,7 @@ def authentication():
     tab_selected_two="false"
     tab_show_two=""
 
-    if CURR_USER_KEY in session:
+    if g.user:
         return redirect(url_for('main.index'))
 
     login_form = LoginForm()
@@ -44,19 +43,19 @@ def authentication():
             login_form.login_email.data=""
             login_form.login_password.data=""
             login_form.login_email.errors =""
-            flash('Successfully authenticated!','success')
+            flash('Successfully authenticated!','quick-recipe')
             return redirect(url_for('main.index'))
         else:
-                login_form.login_email.errors = ["Email or Password incorrect!"]
-                return render_template('auth/authentication.html',login_form=login_form,register_form=register_form,
-                            tab_one=tab_one,
-                            tab_selected_one=tab_selected_one,
-                            tab_show_one=tab_show_one,
-                            tab_two=tab_two,
-                            tab_selected_two=tab_selected_two,
-                            tab_show_two=tab_show_two,
+            login_form.login_email.errors = ["Email or Password incorrect!"]
+            return render_template('auth/authentication.html',login_form=login_form,register_form=register_form,
+                        tab_one=tab_one,
+                        tab_selected_one=tab_selected_one,
+                        tab_show_one=tab_show_one,
+                        tab_two=tab_two,
+                        tab_selected_two=tab_selected_two,
+                        tab_show_two=tab_show_two,
 
-                            )
+                        )
 
     if request.method == 'POST' and register_form.validate_on_submit():
 
@@ -93,10 +92,10 @@ def authentication():
                 User.add_users(new_user)
                 if new_user.id:
                     session[CURR_USER_KEY] = new_user.id
-                    flash('Account created successfully!','success')
+                    flash('Account created successfully!','quick-recipe')
                     return redirect(url_for('main.index'))
         else:
-             register_form.register_password_confirm.errors = ["Password are not the same!"]
+             register_form.register_password_confirm.errors = ["The two passwords entered are not identical!"]
              return render_template('auth/authentication.html',login_form=login_form,register_form=register_form,
                                 tab_one=tab_one,
                                 tab_selected_one=tab_selected_one,

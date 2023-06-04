@@ -83,6 +83,16 @@
 
 })(jQuery);
 
+function aJaxSubmitloading(){
+    const $loading = $('.Divloading').hide();
+    $("form").on("submit", function (e) {
+        $loading.show();
+    });
+}
+$(document).ready(function () {
+    aJaxSubmitloading();
+});
+
 // Get the button
 let mybutton = document.getElementById("scrollToTopBtn");
 
@@ -101,6 +111,7 @@ const url_callback = $("#url-callback").data('url-callback');
 const logout_url = $("#logout-url").data('logout-url');
 const home_url = $("#home-url").data('home-url');
 const auth_url = $("#auth-url").data('auth-url');
+const pin_url = $("#pin-url").data('pin-url');
 
 
 $(".recipe-detail").on("click", async function (e) {
@@ -124,6 +135,20 @@ $(".logout").on("click", async function (e) {
       }).then(function (response) {
         if(response.data == "success"){
             window.location = auth_url;
+        }
+      });
+});
+
+$(".pin-recipe").on("click", async function (e) {
+    e.preventDefault();
+    var recipe_item = $(this).data('obj');
+    await axios({
+        url: pin_url,
+        method: "POST",
+        data: recipe_item,
+      }).then(function (response) {
+        if(response.data == "success"){
+            window.location.reload();
         }
       });
 });

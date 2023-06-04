@@ -13,7 +13,7 @@
 
 **3. What data do you plan on using? You may have not picked your actual API yet,which is fine, just outline what kind of data you would like it to contain.**
 
->I am going to use the data from the **[Spoonacular API (RAPID API)](https://rapidapi.com/spoonacular/api/recipe-food-nutrition)**.
+>I am going to use the data from the **[Tasty API (RAPID API)](https://rapidapi.com/apidojo/api/tasty)**.
 
 **4. In brief, outline your approach to creating your project (knowing that you may not know everything in advance and that these details might change later). Answer questions like the ones below, but feel free to add more information:**
 
@@ -60,7 +60,8 @@
 **f. What features make your site more than CRUD?**
 
 - Mailing system
-- Registration with Google, Facebook, and Apple Authentication
+- Sign in and up with Email
+- Sign in and up using Google
 
 **Do you have any stretch goals?**
 
