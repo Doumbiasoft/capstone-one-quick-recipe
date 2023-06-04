@@ -5,6 +5,8 @@
 
 >To create a recipe recommendation system that utilizes free food APIs to suggest recipes to users based on their dietary restrictions, preferences, and available ingredients.
 
+![img](/app/static/images/quick-recipe-github-illustration.jpg)
+
 **API**: **[Tasty (RAPID API)](https://rapidapi.com/apidojo/api/tasty)**
 
 **DATABASE SCHEMA**:
@@ -20,3 +22,4 @@ export FLASK_DEBUG=1
 flask run
 flask run -h "ip-address"
 ```
+
