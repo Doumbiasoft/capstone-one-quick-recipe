@@ -43,7 +43,7 @@ def authentication():
             login_form.login_email.data=""
             login_form.login_password.data=""
             login_form.login_email.errors =""
-            flash('Successfully authenticated!','quick-recipe')
+            flash('Successfully authenticated!','success')
             return redirect(url_for('main.index'))
         else:
             login_form.login_email.errors = ["Email or Password incorrect!"]
@@ -92,7 +92,7 @@ def authentication():
                 User.add_users(new_user)
                 if new_user.id:
                     session[CURR_USER_KEY] = new_user.id
-                    flash('Account created successfully!','quick-recipe')
+                    flash('Account created successfully!','success')
                     return redirect(url_for('main.index'))
         else:
              register_form.register_password_confirm.errors = ["The two passwords entered are not identical!"]

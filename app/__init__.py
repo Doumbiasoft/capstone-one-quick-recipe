@@ -2,6 +2,7 @@ from app.extensions import Flask, db,DebugToolbarExtension,Session,Object2Json,n
 from config import Config
 from app.models.users import User
 
+
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
@@ -9,8 +10,10 @@ def create_app(config_class=Config):
     # Initialize the session extension
     Session(app)
     DebugToolbarExtension(app)
+
     """Initialize Flask extensions here"""
     db.init_app(app)
+
 
     """------------------END----------------------------------------------"""
 
@@ -25,14 +28,16 @@ def create_app(config_class=Config):
     app.register_blueprint(search_bp, url_prefix='/search')
 
     """------------------END----------------------------------------------"""
-    """Route for testing Application Factory Pattern"""
-    @app.route('/test/')
-    def test_page():
-        return '<h1>Testing the Flask Application Factory Pattern</h1>'
     
     @app.before_request
     def add_user_to_g():
         """If we're logged in, add curr user to Flask global."""
+
+        #set expiration time
+        #session.permanent = True
+        #app.permanent_session_lifetime = timedelta(minutes=1)
+        #session.modified = True
+       #------end expiration time setting ------
 
         if CURR_USER_KEY in session:
             g.user = User.query.get(session[CURR_USER_KEY])

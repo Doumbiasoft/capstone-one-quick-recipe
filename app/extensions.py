@@ -11,15 +11,17 @@ from wtforms.validators import InputRequired,Length
 import os
 import requests
 import datetime
+from datetime import timedelta
 import json
 from api_key import api_key
 from helpers import Json2Object,get_data,Object2Json,convert_json
+from mailing import Send_Email
 from random import randrange,sample
 import numpy
 
-
 db = SQLAlchemy()
 bcrypt = Bcrypt()
+
 #-------------Admin info-----------
 ADMIN_FIRST_NAME='ADMIN_FIRST_NAME'
 ADMIN_LAST_NAME='ADMIN_LAST_NAME'
@@ -35,3 +37,8 @@ headers = {
 	"X-RapidAPI-Key": API_KEY,
 	"X-RapidAPI-Host": "tasty.p.rapidapi.com"
 }
+BASE_URI = os.path.dirname(__file__)
+# Get absolute path to user's home directory
+HOME_DIR = os.path.expanduser('~/')
+# '/' is added to ensure the path has a trailing slash
+APP_STATIC_DATA_URI = os.path.join(HOME_DIR, '.my_flask_app_app_production/static/')

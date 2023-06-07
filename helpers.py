@@ -3,6 +3,7 @@ from typing import Final
 from requests_cache import CachedSession
 from datetime import timedelta
 
+
 try:
     from types import SimpleNamespace as Namespace
 except ImportError:

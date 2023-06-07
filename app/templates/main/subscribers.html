@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block title %}List of subscribers {% endblock %}
+
+{% block content %}
+<style>
+    .card {
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        transition: all 0.2s ease-in-out;
+        box-sizing: border-box;
+        margin-top:10px;
+        margin-bottom:10px;
+        background-color:#FFF;
+      }
+      
+      .card:hover {
+        box-shadow: 0 5px 5px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+      }
+      .card > .card-inner {
+        padding:10px;
+      }
+      .card .header h2, h3 {
+        margin-bottom: 0px;
+        margin-top:0px;
+      }
+      .card .header {
+        margin-bottom:5px;
+      }
+      .card img{
+        width:100%;
+      }
+</style>
+ <!-- Recipe Section Begin -->
+ <section class="recipe-section spad">
+    <section class="feature-recipe" style="padding-top: 0px;padding-bottom: 5px;background-color: transparent;">
+        <div class="section-title">
+            <h5><i class="fa fa-list-ul" style="font-size: large;"></i>&nbsp;Subscribers </h5>
+            
+        </div>
+    </section>
+    <div class="container">
+      <form action="{{url_for('main.send_mail')}}" method="POST">
+        <button type="submit" class="btn btn-sm btn-secondary">Send Email</button>
+      </form>
+        {% if list_subscribers %}
+        <br><br>
+        <div id="paginated-list" class="row" data-current-page="1" aria-live="polite">
+            {% for subscriber in list_subscribers %}
+            <div class="col-sm-4 page-item">
+                <div class="card">
+                  <div class="image text-center">
+                    <br>
+                    <img alt="" class="w-50" src="{{url_for('static',filename='images/user.png')}}" />
+                  </div>
+                  <div class="card-inner">
+                    <hr>
+                    <div class="header text-center">
+                      <h2>{{subscriber.full_name}}</h2>
+                      <h5 style="color: gray;">{{subscriber.email}}</h5>
+                      <h6><small class="font-weight-bold">Compte created on {{subscriber.friendly_date}}</small></h6>
+                  </div>
+                  <hr>
+                  <div class="content">
+                    <a href="#" class="btn  btn-sm btn-secondary" style="font-size: large;"><i class="fa fa-rotate-left"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="#" class="btn  btn-sm btn-secondary" style="font-size: large;"><i class="fa  fa-trash"></i></a>
+                 </div>
+                </div>
+                   
+                </div>
+              </div>
+            {% endfor %}
+        </div>
+        <br><br><br><br><br>
+        <div class="row">
+            <div class="col-lg-12">
+                <nav class="pagination-container">
+                    <button class="pagination-button" id="prev-button" aria-label="Previous page" title="Previous page"><i class="fa fa-arrow-circle-left fa-2x"></i></button>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<div id="pagination-numbers"></div>&nbsp;&nbsp;
+                    <button class="pagination-button" id="next-button" aria-label="Next page" title="Next page"><i class="fa fa-arrow-circle-right fa-2x"></i></button>
+                </nav>
+            </div>
+        </div>
+        {% else%}
+        <div class="container">
+            <div class="card-body">
+                  <div class="row">
+                      <div class="text-center col-lg-12">
+                          <img alt src="{{url_for('static',filename='images/appreciation.svg')}}"  style="height:50%" />
+                          <p class="lead fw-bold" style="font-size: x-large;">
+                            You do not have any favorite recipes yet.
+                            </p>
+                      </div>
+                  </div>
+            </div>
+            </div>
+        {% endif %}
+
+    </div>
+</section>
+<!-- Recipe Section End -->
+
+{% endblock %}
+
+{% block scripts %}
+    $('#link_subscribers').toggleClass('active');
+{% endblock %}

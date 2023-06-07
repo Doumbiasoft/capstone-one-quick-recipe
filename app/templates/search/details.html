@@ -40,11 +40,18 @@
                         {% endif %}
                         <h2 class="text-center">{{recipe.name}}</h2>
                         <div class="rating">
-                            {% if recipe.user_ratings  %}
-                                {%for star in generate_float_range(0, recipe.user_ratings.score) %}
-                                   <i class="fa fa-star"></i>
+                        {% if recipe.user_ratings  %}
+                                {% if recipe.user_ratings.score < 1 or recipe.user_ratings.score == 0    %}
+                                    <i class="fa fa-star-o"></i>
+                                {% else  %}
+                                    {%for star in generate_float_range(0, recipe.user_ratings.score) %}
+                                    <i class="fa fa-star"></i>
+                                    {% endfor%}
+                                {% endif %}
+                                {%for star in generate_float_range(1,((5)-(recipe.user_ratings.score))) %}
+                                   <i class="fa fa-star-o"></i>
                                 {% endfor%}
-                            {% endif %}
+                        {% endif %}
                         </div>
                             <div class="reviews">
                                 {% if recipe.user_ratings  %}
@@ -66,14 +73,21 @@
                         </div>
                     </div>
                     <div class="ingredient-list">
-                        <div class="recipe-btn">
+                        <div class="recipe-btn text-center">
+
                             {% if g.user %}
-                            <a href="#"> <i class="fa fa-print text-white text-white"></i>&nbsp;Print Recipe</a>
+                               <a href="#"> <i class="fa fa-print text-white text-white"></i>&nbsp;&nbsp;Print Recipe</a>
                                 {% if g.user.is_favorite(recipe.id) %}
-                                <a href="#" class="black-btn pin-recipe" data-obj="{{obj_to_json(recipe)}}"><i class="fa fa-heart text-danger"></i>&nbsp;Unpin Recipe</a>
+                                <a href="#" class="black-btn pin-recipe" data-obj="{{obj_to_json(recipe)}}"><i class="fa fa-heart text-danger"></i>&nbsp;&nbsp;Unpin Recipe</a>
                                 {% else %}
-                                <a href="#" class="black-btn pin-recipe" data-obj="{{obj_to_json(recipe)}}"><i class="fa fa-heart text-white"></i>&nbsp;Pin Recipe</a>
+                                <a href="#" class="black-btn pin-recipe" data-obj="{{obj_to_json(recipe)}}"><i class="fa fa-heart text-white"></i>&nbsp;&nbsp;Pin Recipe</a>
                                 {% endif %}
+                                <a href="#" class="black-btn my-2"><i class="fa fa-share-alt text-white"></i>&nbsp;&nbsp;Share</a>
+
+                            {% else %}
+                            <a href="#" data-toggle="modal" data-target="#alertModal"><i class="fa fa-print text-white text-white"></i>&nbsp;&nbsp;Print Recipe</a>
+                            <a href="#" data-toggle="modal" data-target="#alertModal" class="black-btn"><i class="fa fa-heart text-white"></i>&nbsp;&nbsp;Pin Recipe</a>
+                            <a href="#" data-toggle="modal" data-target="#alertModal" class="black-btn my-2"><i class="fa fa-share-alt text-white"></i>&nbsp;&nbsp;Share</a>
                             {% endif %}
                         </div>
                         <div class="list-item">
@@ -164,7 +178,30 @@
     </div>
 </section>
 <!-- Single Recipe Section End -->
- 
+ <!-- Modal alert -->
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-weight-bold" id="alertModalLabel"><img alt="" height="50" width="50" src="{{url_for('static',filename='images/apple-touch-icon.png')}}">&nbsp;INFO</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-white" style="background-color: #343a40!important;">
+            <div class="row contact-form">
+                <div class="col-lg-12  text-center font-weight-bold">
+                    <h4>You should be authenticated before using this feature.</h4>
+                  </div>
+            </div>
+        </div>
+        <div class="modal-footer" style="background-color: #343a40!important;">
+            
+          </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal alert -->
 {% endblock %}
 
 {% block scripts %}

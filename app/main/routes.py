@@ -1,6 +1,9 @@
 from app.main import bp
-from app.extensions import API_URL_BASE,headers,get_data,render_template,randrange,sample,Json2Object,Object2Json,session,request,g,redirect,url_for,abort,CURR_USER_KEY,db,jsonify,json,convert_json
+from app.extensions import API_URL_BASE,headers,get_data,render_template,randrange,sample,Json2Object,Object2Json,session,request,g,redirect,url_for,abort,CURR_USER_KEY,db,jsonify,json,convert_json,flash,Send_Email
 from app.models.recipe_favorites import RecipeFavorite
+from app.models.users import User
+
+
 
 @bp.route('/')
 def index():
@@ -11,15 +14,15 @@ def index():
     """get the maximum dessert recipes"""
     data_recipes_desert = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"desserts"})
     """get the maximum vegetarian recipes"""
-    data_recipes_vegetarian = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"vegetarian"})#frank_s_vegetarian_snacks#vegetarian#thanksgiving_vegetarian
+    data_recipes_vegetarian = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"vegetarian"})
     """get the most popular recipes"""
     data_recipes_most_popular = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"christmas"})
     """get the maximum meat lover recipes"""
-    data_recipes_meat_lover = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"one_top_app_meat"})#meat_loaf
+    data_recipes_meat_lover = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"one_top_app_meat"})
     """get the maximum gluten free recipes"""
     data_recipes_gluten_free = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"gluten_free"})
     """get the maximum african recipes"""
-    data_recipes_african = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"african"}) #african#Jollof Rice
+    data_recipes_african = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"african"})
 
     random_number = randrange(0, len(data_recipes_random.results) - 1)
     random_recipe = data_recipes_random.results[random_number]
@@ -63,9 +66,22 @@ def index():
 def recipes_favorites():
     if CURR_USER_KEY not in session:
                 abort(401)
+    if not g.user:
+        return redirect(url_for('main.index'))
 
     return render_template('main/favorites.html')
 
+@bp.route('/subscribers')
+def get_subscribers():
+    if CURR_USER_KEY in session and g.user:
+       if not g.user.is_admin:
+          abort(401)
+       else:
+          list_subscribers = User.query.filter(User.is_admin == False)
+    else:
+         return redirect(url_for('auth.authentication'))
+
+    return render_template('main/subscribers.html',list_subscribers=list_subscribers)
 
 @bp.route('/recipes/pin', methods=["POST"])
 def add_pin():
@@ -102,3 +118,80 @@ def add_pin():
         abort(401)
 
     return (jsonify("success"), 201)
+
+@bp.route('/user/profile')
+def user_profile():
+    if not g.user:
+        return redirect(url_for('auth.authentication'))
+
+
+    return render_template('main/profile.html')
+
+@bp.route('/user/edit-info',methods=['POST'])
+def user_edit_info():
+    if g.user:
+       if request.method == 'POST':
+           data = Json2Object(request.get_data())
+           first_name = data.first_name
+           last_name = data.last_name
+           user = User.query.filter(User.id==g.user.id).first()
+           if user:
+               user.first_name = first_name
+               user.last_name = last_name
+               db.session.add(user)
+               db.session.commit()
+               return (jsonify("success"), 201)
+           else:
+               return (jsonify("fail"),300)
+
+@bp.route('/user/check-current-pass',methods=['POST'])
+def user_check_current_pass():
+
+    if g.user:
+       if request.method == 'POST':
+           data = Json2Object(request.get_data())
+           password = data.curr_password
+
+           if User.hash_function_check(g.user.password,password):
+               return (jsonify("success"), 201)
+           else:
+               return (jsonify("fail"),201)
+
+@bp.route('/user/save-password',methods=['POST'])
+def user_save_password():
+    if g.user:
+       if request.method == 'POST':
+           data = Json2Object(request.get_data())
+           new_password = data.new_password
+           user = User.query.filter(User.id==g.user.id).first()
+           if user:
+               user.password = User.hash_function(new_password)
+               db.session.add(user)
+               db.session.commit()
+               return (jsonify("success"), 201)
+           else:
+               return (jsonify("fail"),300)
+
+@bp.route('/user/delete-account',methods=['POST'])
+def user_delete_account():
+    if g.user:
+       if request.method == 'POST':
+           data = Json2Object(request.get_data())
+           email = data.email
+           user = User.query.filter(User.id==g.user.id).first()
+           if user and user.email==email:
+               db.session.delete(user)
+               db.session.commit()
+               if CURR_USER_KEY in session:
+                  del session[CURR_USER_KEY]
+                  flash('Account deleted Successfully!','success')
+               return (jsonify("success"), 201)
+           else:
+               return (jsonify("fail"),300)
+
+@bp.route('/send-mail', methods=['GET','POST'])
+def send_mail():
+    if request.method == 'POST':
+            send = Send_Email('doumbiasoft@gmail.com','Account activation',"Email activation",'text')
+            return send
+    return 'Send Mail'

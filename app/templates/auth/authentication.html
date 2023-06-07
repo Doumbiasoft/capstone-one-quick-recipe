@@ -34,9 +34,7 @@
                 {{ login_form.hidden_tag() }}
                     <br>
                     <h3>Sign In</h3>
-                    <div align="center" valign="center" class="col-12 Divloading my-3">
-                        <img alt="" src="{{url_for('static',filename='images/ajax_loader_smal_black.gif')}}" />
-                    </div>
+                   
                     <div class="row">
                       <div class="col-lg-12 social-buttons">
                         <a href="#" class="btn btn-lg btn-block btn-google">
@@ -59,6 +57,9 @@
                     <div class="text-center">
                     <p><a href="#two"><strong>Forgot password?</strong></a></p>
                     </div>
+                    <div align="center" valign="center" class="col-12 Divloading my-3">
+                        <img alt="" src="{{url_for('static',filename='images/ajax_loader_smal_black.gif')}}" />
+                    </div>
                 </form>
           
             </div>
@@ -69,9 +70,7 @@
                 {{ register_form.hidden_tag() }}
                 <br>
                 <h3>Sign Up</h3>
-                <div align="center" valign="center" class="col-12 Divloading my-3">
-                    <img alt="" src="{{url_for('static',filename='images/ajax_loader_smal_black.gif')}}" />
-                </div>
+                
                     <div class="row">
                       <div class="col-lg-12 social-buttons">
                         <a href="#" class="btn btn-lg btn-block btn-google">
@@ -103,6 +102,9 @@
                         </div>
                     </div>
                 <button type="submit" class="w-100 my-3">Register</button>
+                <div align="center" valign="center" class="col-12 Divloading my-3">
+                    <img alt="" src="{{url_for('static',filename='images/ajax_loader_smal_black.gif')}}" />
+                </div>
                 
             </form>
         </div>

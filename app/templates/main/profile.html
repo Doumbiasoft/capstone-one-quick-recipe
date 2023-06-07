@@ -1,0 +1,257 @@
+{% extends 'base.html' %}
+{% block title %} Profile {% endblock %}
+
+{% block content %}
+<style>
+       .card{
+
+        width: 500px;
+        border: none;
+        border-radius: 15px;
+        padding: 8px;
+        background-color: #fff;
+        position: relative;
+        height: 370px;
+       }
+
+       .upper{
+
+        height: 100px;
+
+       }
+
+       .upper img{
+
+        width: 100%;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+
+       }
+
+       .user{
+        position: relative;
+       }
+
+       .profile img{
+
+        
+        height: 80px;
+        width: 80px;
+        margin-top:2px;
+
+       
+       }
+
+       .profile{
+
+        position: absolute;
+        top:-50px;
+        left: 38%;
+        height: 90px;
+        width: 90px;
+        border:3px solid #fff;
+
+        border-radius: 50%;
+
+       }
+
+       .follow{
+
+        border-radius: 0px;
+        padding-left: 20px;
+        padding-right: 20px;
+        height: 35px;
+        margin-bottom: 15px;
+        margin-right: 5px;
+        margin-left: 5px;
+        width: 200px;
+        font-size: large;
+        font-weight: bold;
+       }
+
+       .stats span{
+
+        font-size: 29px;
+       }
+</style>
+ <section class="contact-section spad">
+    <section class="feature-recipe" style="padding-top: 0px;padding-bottom: 5px;background-color: transparent;">
+        <div class="section-title">
+            <h5><i class="fa fa-user" style="font-size: large;"></i>&nbsp;Profile</h5>
+        </div>
+    </section>
+    <div class="container">
+    <br><br>
+    <!-- Tabs navs ----->
+    <div id="Tab-view" >
+    <ul class="nav nav-tabs mb-3" id="tabs" data-tabs="tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+        <a class="nav-link active" data-toggle="tab" role="tab" aria-controls="one" aria-selected="true">
+            &nbsp;<strong>USER</strong>
+        </a>
+        </li>
+    </ul>
+    <!-- Tabs navs ----->
+    <!-- Tabs content -->
+    <div class="tab-content" id="content">
+        <div class="tab-pane fade active show " id="one" role="tabpanel" aria-labelledby="one">
+            <div class="col-lg-12" style="min-height: 500px;">
+                <div class="container d-flex justify-content-center align-items-center">
+                    <div class="card">
+                     <div class="upper" >
+                      <div style="height: 50px;width:100%">
+
+                      </div>
+                     </div>
+                     <div class="user text-center">
+                       <div class="profile">
+                         <img alt="profile" src="{{url_for('static',filename='images/user.png')}}" class="rounded-circle" width="80">
+                       </div>
+                       <hr>
+
+                     </div>
+                     <div class="mt-5 text-center">
+                       <h4 class="mb-0">{{g.user.full_name}}</h4>
+                       <span class="text-muted d-block mb-2">{{g.user.email}}</span>
+                        <hr>
+                       {% if g.user.is_oauth == false %}
+                          {% if g.user.is_admin == false %}
+                            <a href="#" class="btn btn-primary btn-sm follow infoModal" data-toggle="modal" data-target="#infoModal" data-first-name="{{g.user.first_name}}" data-last-name="{{g.user.last_name}}"><i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit info</a>
+                          {% endif %}
+                       <a href="#" class="btn btn-primary btn-sm follow passwordModal" data-toggle="modal" data-target="#passwordModal"><i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit password</a>
+                       {% endif %}
+
+                       {% if g.user.is_admin == false %}
+                       <a href="#" class="btn btn-primary btn-sm follow deleteModal" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete account</a>
+                       {% endif %}
+                     </div>
+                     <hr>
+                    </div>
+       
+                  </div>
+            </div>
+        </div>
+      
+    </div>
+    </div>
+    <!-- Tabs content -->
+
+       
+    </div>
+</section>
+<!-- Modal info -->
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-weight-bold" id="infoModalLabel"><img alt="" height="50" width="50" src="{{url_for('static',filename='images/apple-touch-icon.png')}}">&nbsp;EDIT INFO</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="background-color: #343a40!important;">
+            <div class="row contact-form">
+                <div class="col-lg-12">
+                    <input type="text" id="first_name" placeholder="First Name" required>
+                </div>
+                <div class="col-lg-12">
+                    <input type="text" id="last_name" placeholder="Last Name" required>
+                </div>
+                <div class="col-lg-12  text-center">
+                  <div class="text-danger" id="msg_info"></div>
+                 </div>
+            </div>
+        </div>
+        <div class="modal-footer" style="background-color: #343a40!important;">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="#" class="btn btn-primary edit-user-info">Save changes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal info -->
+
+  <!-- Modal Password -->
+<div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-weight-bold" id="passwordModalLabel"><img alt="" height="50" width="50" src="{{url_for('static',filename='images/apple-touch-icon.png')}}">&nbsp;EDIT PASSWORD</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="background-color: #343a40!important;">
+            <div class="row contact-form">
+                <div class="col-lg-10">
+                    <input type="password" class="old_pass" id="old_pass" placeholder="Old Password" required>
+                </div>
+                <div class="col-lg-2">
+                    <i id="ok-current-pass" class="fa fa-check-circle fa-3x text-success" aria-hidden="true" style="display: none;"></i>
+                    <i id="nonok-current-pass" class="fa fa-times-circle fa-3x text-danger" aria-hidden="true" style="display: none;"></i>
+                </div>
+                
+                <div class="col-lg-10">
+                    <input type="password" id="new_pass" placeholder="New Password" next="#new_pass" required disabled>
+                </div>
+                <div class="col-lg-2">
+                  
+                </div>
+
+                <div class="col-lg-10">
+                    <input type="password" id="conf_new_pass" class="conf_new_pass" placeholder="Confirm New Password" required disabled>
+                </div>
+                <div class="col-lg-2">
+                    <i id="ok-new-pass" class="fa fa-check-circle fa-3x text-success" aria-hidden="true" style="display: none;"></i>
+                    <i id="nonok-new-pass" class="fa fa-times-circle fa-3x text-danger" aria-hidden="true" style="display: none;"></i>
+                </div>
+               
+            </div>
+            <div class="col-lg-12  text-center">
+             <div class="text-danger font-weight-bold" id="msg_password"></div>
+            </div>
+        </div>
+        <div class="modal-footer" style="background-color: #343a40!important;">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="#"  class="btn btn-primary edit-password">Save changes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal password -->
+
+  <!-- Modal info -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-weight-bold" id="deleteModalLabel"><img alt="" height="50" width="50" src="{{url_for('static',filename='images/apple-touch-icon.png')}}">&nbsp;DELETE ACCOUNT</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="background-color: #343a40!important;">
+            <div class="row contact-form">
+                <label class="label m-3 text-danger font-weight-bold">To delete the account please enter your email address<BR><span class="text-white">'{{g.user.email}}'</span><BR>and hit the delete button. Be careful this operation is irreversible and you will definitely lost your all data.</label>
+                <div class="col-lg-12">
+                    <input type="text" id="email" class="email" placeholder="Type your email" data-email="{{g.user.email}}" required>
+                </div>
+                <div class="col-lg-12  text-center">
+                  <div class="text-danger font-weight-bold" id="msg_delete"></div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer" style="background-color: #343a40!important;">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <!-- <a href="#" class="btn btn-primary delete-account" >Delete</a> -->
+          <button class="btn btn-primary delete-account" disabled>Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal delete account -->
+{% endblock %}
+
+{% block scripts %}
+    $('#link_auth').toggleClass('active');
+{% endblock %}

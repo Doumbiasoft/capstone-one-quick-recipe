@@ -12,20 +12,26 @@ class User(db.Model):
     last_name = db.Column(db.String(255), nullable = False)
     email = db.Column(db.String(50), unique = True, nullable = False)
     password = db.Column(db.Text, nullable = False)
-    password_reset_token = db.Column(db.Text)
-    oauth_provider = db.Column(db.Text)
-    oauth_uid = db.Column(db.Text)
-    oauth_access_token = db.Column(db.Text)
-    oauth_refresh_token = db.Column(db.Text)
-    oauth_expires_at = db.Column(db.DateTime)
+    password_reset_token = db.Column(db.Text , default=None)
+    oauth_provider = db.Column(db.Text , default=None)
+    oauth_uid = db.Column(db.Text , default=None)
+    oauth_access_token = db.Column(db.Text , default=None)
+    oauth_refresh_token = db.Column(db.Text , default=None)
+    oauth_profile_url = db.Column(db.Text, default=None)
+    oauth_expires_at = db.Column(db.DateTime, default=None)
     is_oauth = db.Column(db.Boolean,nullable = False)
     created_at = db.Column(db.DateTime(timezone = True),server_default = func.now())
     updated_at = db.Column(db.DateTime(timezone = True),server_default = func.now())
+    code_activation = db.Column(db.Text, default=None)
     is_active = db.Column(db.Boolean, nullable = False, default = True)
     is_admin = db.Column(db.Boolean, nullable = False, default = False)
     recipe_favorites = db.relationship("RecipeFavorite", backref="user", cascade="all, delete-orphan")
     recipe_reviews = db.relationship("RecipeReview", backref="user", cascade="all, delete-orphan")
 
+    @property
+    def friendly_date(self):
+        """Return formatted date."""
+        return self.created_at.strftime("%a %b %-d  %Y, %-I:%M %p")
 
     @property
     def full_name(self):
