@@ -48,19 +48,19 @@ class User(db.Model):
             """This function will check any encrypt value in input parameters"""
             return bcrypt.check_password_hash(old_password_hash, new_password_hash)
     @classmethod
-    def register(cls, first_name, last_name, email, password,is_oauth):
+    def register(cls, first_name, last_name, email, password,is_oauth,is_active):
         """Register user w/hashed password & return user."""
 
         password_hashed = bcrypt.generate_password_hash(password).decode("utf8")
 
         # return instance of user w/username and hashed pwd
-        return cls(first_name=first_name, last_name=last_name,email=email,password=password_hashed,is_oauth = is_oauth)
+        return cls(first_name=first_name, last_name=last_name,email=email,password=password_hashed,is_oauth = is_oauth,is_active=is_active)
 
     @classmethod
     def login(cls, email, password):
         """Validate that user exists & password is correct. Return user if valid; else return False."""
 
-        user = User.query.filter_by(email=email).first()
+        user = User.query.filter(User.email==email,User.is_active==True).first()
 
         if user and bcrypt.check_password_hash(user.password, password):
             #return user instance
@@ -83,10 +83,7 @@ class User(db.Model):
             return False
         return final_user
 
-    def update_users(id, firstname, lastname):
-        user = User.query.get_or_404(id)
-        user.first_name = firstname
-        user.last_name = lastname
+    def update_users(user):
         db.session.add(user)
         try:
             db.session.commit()

@@ -259,7 +259,7 @@ $(".old_pass").on("blur", async function(e){
           $new_pass.attr("disabled",false);
           $conf_new_pass.attr("disabled",false);
       }
-      if(response.data == "fail"){
+      if(response.data == "failed"){
 
           show($nonok_current_pass);
           hide($ok_current_pass);

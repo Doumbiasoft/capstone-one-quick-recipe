@@ -1,5 +1,5 @@
 from app.main import bp
-from app.extensions import API_URL_BASE,headers,get_data,render_template,randrange,sample,Json2Object,Object2Json,session,request,g,redirect,url_for,abort,CURR_USER_KEY,db,jsonify,json,convert_json,flash,Send_Email
+from app.extensions import API_URL_BASE,headers,get_data,render_template,randrange,sample,Json2Object,Object2Json,session,request,g,redirect,url_for,abort,CURR_USER_KEY,db,jsonify,json,convert_json,flash,Send_Email,os,APP_STATIC
 from app.models.recipe_favorites import RecipeFavorite
 from app.models.users import User
 
@@ -142,7 +142,7 @@ def user_edit_info():
                db.session.commit()
                return (jsonify("success"), 201)
            else:
-               return (jsonify("fail"),300)
+               return (jsonify("failed"),300)
 
 @bp.route('/user/check-current-pass',methods=['POST'])
 def user_check_current_pass():
@@ -155,7 +155,7 @@ def user_check_current_pass():
            if User.hash_function_check(g.user.password,password):
                return (jsonify("success"), 201)
            else:
-               return (jsonify("fail"),201)
+               return (jsonify("failed"),201)
 
 @bp.route('/user/save-password',methods=['POST'])
 def user_save_password():
@@ -170,7 +170,7 @@ def user_save_password():
                db.session.commit()
                return (jsonify("success"), 201)
            else:
-               return (jsonify("fail"),300)
+               return (jsonify("failed"),300)
 
 @bp.route('/user/delete-account',methods=['POST'])
 def user_delete_account():
@@ -187,11 +187,4 @@ def user_delete_account():
                   flash('Account deleted Successfully!','success')
                return (jsonify("success"), 201)
            else:
-               return (jsonify("fail"),300)
-
-@bp.route('/send-mail', methods=['GET','POST'])
-def send_mail():
-    if request.method == 'POST':
-            send = Send_Email('doumbiasoft@gmail.com','Account activation',"Email activation",'text')
-            return send
-    return 'Send Mail'
+               return (jsonify("failed"),300)

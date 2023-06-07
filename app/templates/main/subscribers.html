@@ -38,9 +38,6 @@
         </div>
     </section>
     <div class="container">
-      <form action="{{url_for('main.send_mail')}}" method="POST">
-        <button type="submit" class="btn btn-sm btn-secondary">Send Email</button>
-      </form>
         {% if list_subscribers %}
         <br><br>
         <div id="paginated-list" class="row" data-current-page="1" aria-live="polite">

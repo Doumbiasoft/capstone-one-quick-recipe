@@ -18,6 +18,10 @@ from helpers import Json2Object,get_data,Object2Json,convert_json
 from mailing import Send_Email
 from random import randrange,sample
 import numpy
+from itsdangerous import SignatureExpired,BadTimeSignature,URLSafeTimedSerializer
+from config import Config
+app_config=Config
+
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -37,8 +41,5 @@ headers = {
 	"X-RapidAPI-Key": API_KEY,
 	"X-RapidAPI-Host": "tasty.p.rapidapi.com"
 }
-BASE_URI = os.path.dirname(__file__)
-# Get absolute path to user's home directory
-HOME_DIR = os.path.expanduser('~/')
-# '/' is added to ensure the path has a trailing slash
-APP_STATIC_DATA_URI = os.path.join(HOME_DIR, '.my_flask_app_app_production/static/')
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top
+APP_STATIC = os.path.join(APP_ROOT, 'static')
