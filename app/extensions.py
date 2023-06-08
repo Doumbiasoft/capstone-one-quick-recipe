@@ -13,19 +13,17 @@ import requests
 import datetime
 from datetime import timedelta
 import json
-from api_key import api_key
 from helpers import Json2Object,get_data,Object2Json,convert_json
 from mailing import Send_Email
 from random import randrange,sample
 import numpy
 from itsdangerous import SignatureExpired,BadTimeSignature,URLSafeTimedSerializer
 from config import Config
-app_config=Config
 
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
-
+app_config=Config()
 #-------------Admin info-----------
 ADMIN_FIRST_NAME='ADMIN_FIRST_NAME'
 ADMIN_LAST_NAME='ADMIN_LAST_NAME'
@@ -35,10 +33,10 @@ ADMIN_PASSWORD='ADMIN_PASSWORD'
 
 RECIPE_ITEM = "recipe_item"
 CURR_USER_KEY = "curr_user_key"
-API_KEY = os.environ.get('API_KEY',api_key)
+
 API_URL_BASE ="https://tasty.p.rapidapi.com"
 headers = {
-	"X-RapidAPI-Key": API_KEY,
+	"X-RapidAPI-Key": app_config.API_KEY,
 	"X-RapidAPI-Host": "tasty.p.rapidapi.com"
 }
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top

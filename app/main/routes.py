@@ -10,19 +10,19 @@ def index():
     url = f"{API_URL_BASE}/recipes/list"
 
     """get the maximum recipes"""
-    data_recipes_random = get_data(url,headers=headers,params={"from":"0","size":"100"})
+    data_recipes_random = get_data(url,headers=headers,params={"from":"0","size":"100","approved_at":"asc"})
     """get the maximum dessert recipes"""
-    data_recipes_desert = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"desserts"})
+    data_recipes_desert = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"desserts","approved_at":"asc"})
     """get the maximum vegetarian recipes"""
-    data_recipes_vegetarian = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"vegetarian"})
+    data_recipes_vegetarian = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"vegetarian","approved_at":"asc"})
     """get the most popular recipes"""
-    data_recipes_most_popular = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"christmas"})
+    data_recipes_most_popular = data_recipes_random
     """get the maximum meat lover recipes"""
-    data_recipes_meat_lover = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"one_top_app_meat"})
+    data_recipes_meat_lover = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"one_top_app_meat","approved_at":"asc"})
     """get the maximum gluten free recipes"""
-    data_recipes_gluten_free = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"gluten_free"})
+    data_recipes_gluten_free = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"gluten_free","approved_at":"asc"})
     """get the maximum african recipes"""
-    data_recipes_african = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"african"})
+    data_recipes_african = get_data(url,headers=headers,params={"from":"0","size":"100","tags":"african","approved_at":"asc"})
 
     random_number = randrange(0, len(data_recipes_random.results) - 1)
     random_recipe = data_recipes_random.results[random_number]

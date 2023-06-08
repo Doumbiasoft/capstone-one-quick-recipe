@@ -13,7 +13,7 @@ tags = data_tags.results
 def recipes():
     """Search view"""
 
-    querystring = {"from":"0","size":"20"}
+    querystring = {"from":"0","size":"20","approved_at":"asc"}
 
     form = SearchForm()
     form.tags.choices = get_tag_tuple()
@@ -25,8 +25,10 @@ def recipes():
 
             if tag is not None:
                 querystring["tags"] = tag.lower()
+                querystring["size"] = "100"
             if recipe is not None:
                 querystring["q"] = recipe.lower()
+                querystring["size"] = "100"
 
 
             data_recipes_found = get_data(url,headers=headers,params=querystring)

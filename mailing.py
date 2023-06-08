@@ -1,23 +1,14 @@
-import os
 import smtplib
 import ssl
 from email.message import EmailMessage
-from email.headerregistry import Address
-from api_key import email_key,email_sender,email_sender_name
-
-MAIL_SERVER = os.environ.get('MAIL_SERVER','smtp.gmail.com') 
-MAIL_PORT = os.environ.get('MAIL_PORT',465)
-MAIL_SMTP = os.environ.get('MAIL_SMTP','smtp.gmail.com')
-MAIL_USERNAME = os.environ.get('MAIL_USERNAME',email_sender)
-MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD',email_key) 
-MAIL_SENDER_NAME = os.environ.get('MAIL_SENDER_NAME',email_sender_name) 
-MAIL_DEFAULT_SENDER = Address(display_name = MAIL_SENDER_NAME, addr_spec = MAIL_USERNAME)
+from config import Config
+app_config=Config
 
 
 def Send_Email(recipient:str,subject:str,message:str,content_type:str="html"):
     
     msg = EmailMessage()
-    msg['From'] = MAIL_DEFAULT_SENDER 
+    msg['From'] = app_config.MAIL_DEFAULT_SENDER
     msg['To'] = recipient
     msg['Subject'] = subject
     if content_type =='html':
@@ -28,9 +19,9 @@ def Send_Email(recipient:str,subject:str,message:str,content_type:str="html"):
     # Add SSL (layer of security)
     context = ssl.create_default_context()
     # Log in and send the email
-    with smtplib.SMTP_SSL(MAIL_SMTP, MAIL_PORT, context=context) as smtp:
-        smtp.login(MAIL_USERNAME, MAIL_PASSWORD)
-        data = smtp.sendmail(MAIL_USERNAME, recipient, msg.as_string())
+    with smtplib.SMTP_SSL(app_config.MAIL_SMTP, app_config.MAIL_PORT, context=context) as smtp:
+        smtp.login(app_config.MAIL_USERNAME, app_config.MAIL_PASSWORD)
+        data = smtp.sendmail(app_config.MAIL_USERNAME, recipient, msg.as_string())
         
     return data
     
