@@ -105,7 +105,7 @@
                      </div>
                      <div class="user text-center">
                        <div class="profile">
-                         <img alt="profile" src="{{url_for('static',filename='images/user.png')}}" class="rounded-circle" width="80">
+                         <img alt="profile" src="{% if g.user.is_oauth %}{{g.user.oauth_profile_url}}{% else %}{{url_for('static',filename='images/user.png')}}{% endif %}" class="rounded-circle" width="80">
                        </div>
                        <hr>
 

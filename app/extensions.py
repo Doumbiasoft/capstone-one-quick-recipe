@@ -42,3 +42,18 @@ headers = {
 }
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top
 APP_STATIC = os.path.join(APP_ROOT, 'static')
+
+
+#for local testing google oauth in http
+# export OAUTHLIB_INSECURE_TRANSPORT=1
+google_client_config = {
+    "web": {
+        "client_id": app_config.GOOGLE_CLIENT_ID,
+        "project_id": app_config.GOOGLE_PROJECT_ID,
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_secret": app_config.GOOGLE_CLIENT_SECRET,
+        "redirect_uris": app_config.GOOGLE_REDIRECT_URIS,
+    }
+}

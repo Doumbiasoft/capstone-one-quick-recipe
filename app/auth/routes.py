@@ -1,10 +1,86 @@
-from app.extensions import render_template,redirect,flash,url_for,abort,request,g,session,jsonify,CURR_USER_KEY,os,APP_STATIC,EMAIL_RESET,Send_Email,URLSafeTimedSerializer,SignatureExpired,BadTimeSignature,app_config
+from app.extensions import render_template,redirect,flash,url_for,abort,request,g,session,db,jsonify,CURR_USER_KEY,os,APP_STATIC,EMAIL_RESET,Send_Email,URLSafeTimedSerializer,SignatureExpired,BadTimeSignature,app_config,google_client_config
 from app.auth import bp
 from app.forms.auth.login import LoginForm
 from app.forms.auth.register import RegisterForm
 from app.models.users import User
+from google_auth_oauthlib.flow import Flow
+from pip._vendor import cachecontrol
+import google.auth.transport.requests
+from google.oauth2 import id_token
+import requests
+
+
+flow = Flow.from_client_config(
+    client_config=google_client_config,
+    scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
+    redirect_uri=f"{app_config.GOOGLE_REDIRECT_URI}/auth/google/callback"
+)
 
 serializer = URLSafeTimedSerializer(app_config.SECRET_KEY)
+
+
+@bp.route('/google-login')
+def google_login():
+    flow.prompt = 'select_account'
+    authorization_url, state = flow.authorization_url(prompt='select_account')
+    session["state"] = state
+    return redirect(authorization_url)
+
+@bp.route('/google/callback')
+def google_login_callback():
+
+    flow.fetch_token(authorization_response=request.url)
+
+    if not session["state"] == request.args["state"]:
+        abort(500)  # State does not match!
+
+    credentials = flow.credentials
+    request_session = requests.session()
+    cached_session = cachecontrol.CacheControl(request_session)
+    token_request = google.auth.transport.requests.Request(session=cached_session)
+
+    id_info = id_token.verify_oauth2_token(
+        id_token=credentials._id_token,
+        request=token_request,
+        audience= app_config.GOOGLE_CLIENT_ID
+    )
+    user = User.get_users().filter(User.oauth_uid == id_info.get("sub"), User.is_active == True, User.is_oauth == True).first()
+    if user:
+
+        user.first_name = id_info.get("given_name")
+        user.last_name = id_info.get("family_name")
+        user.email = id_info.get("email")
+        user.oauth_provider = "Google"
+        user.oauth_uid = id_info.get("sub")
+        user.oauth_profile_url = id_info.get("picture")
+        db.session.add(user)
+        db.session.commit()
+
+        session[CURR_USER_KEY] = user.id
+        flash('Successfully authenticated!','success')
+        return redirect(url_for('main.index'))
+    else:
+        user = User.get_users().filter(User.email == id_info.get("email")).first()
+        if user:
+            flash('This email address already exists!','warning')
+            return redirect(url_for('auth.authentication'))
+
+        first_name = id_info.get("given_name")
+        last_name = id_info.get("family_name")
+        email = id_info.get("email")
+        oauth_provider = "Google"
+        oauth_uid = id_info.get("sub")
+        oauth_profile_url = id_info.get("picture")
+
+        new_user =  User(first_name=first_name, last_name=last_name, email=email,password="",oauth_provider=oauth_provider,oauth_uid=oauth_uid,oauth_profile_url=oauth_profile_url,is_oauth=True,is_active=True,is_admin=False)
+        db.session.add(new_user)
+        db.session.commit()
+        if new_user.id:
+            send_email_welcome(new_user.first_name,new_user.email)
+            session[CURR_USER_KEY] = new_user.id
+            flash('Your account has been successfully created!','success')
+            return redirect(url_for('main.index'))
+
 
 @bp.route('/authentication', methods=['GET','POST'])
 def authentication():
@@ -36,6 +112,19 @@ def authentication():
 
         email = login_form.login_email.data
         password = login_form.login_password.data
+        check_account_type = User.get_users().filter(User.email == email).first()
+        if check_account_type.is_oauth:
+            flash('This email address is linked to a Google OAuth authentication !','warning')
+            return render_template('auth/authentication.html',login_form=login_form,register_form=register_form,
+                        tab_one=tab_one,
+                        tab_selected_one=tab_selected_one,
+                        tab_show_one=tab_show_one,
+                        tab_two=tab_two,
+                        tab_selected_two=tab_selected_two,
+                        tab_show_two=tab_show_two,
+
+                        )
+
         user = User.login(email = email.casefold(), password = password)
         if user:
             session[CURR_USER_KEY] = user.id
@@ -138,6 +227,11 @@ def logout():
 def clear_session():
      if CURR_USER_KEY in session:
          del session[CURR_USER_KEY]
+     session.clear()
+
+@bp.route('/auth/google/callback')
+def google_callback():
+    pass
 
 @bp.route('/email-reset-password', methods=['GET','POST'])
 def email_reset_password():
@@ -146,7 +240,7 @@ def email_reset_password():
         user = User.get_users().filter(User.email == email, User.is_active == True).first()
         if user:
             if user.is_oauth:
-                flash('This email address has oauth authentication and cannot reset his password in this process!','warning')
+                flash('This email address has linked to a Google OAuth authentication and the password cannot be reset in this process!','warning')
                 return redirect(url_for('auth.email_reset_password'))
             if send_email_reset_password(user.first_name, user.email):
                 return redirect(url_for('auth.send_email_reset_notification'))

@@ -62,7 +62,7 @@
                         {% if g.user.is_admin %}
                         <li id="link_subscribers"><a href="{{ url_for('main.get_subscribers') }}"><i class="fa fa-list-ul" style="font-size: large;"></i>&nbsp;Subscribers</a></li>
                         {% endif %}
-                        <li style="cursor: pointer;font-size: large"><img class="rounded-circle" width="35" height="35" alt="icon" src="{{url_for('static',filename='images/user.png')}}"/>&nbsp;&nbsp;<b>{{ g.user.first_name}}</b>
+                        <li style="cursor: pointer;font-size: large"><img class="rounded-circle" width="35" height="35" alt="icon" src="{% if g.user.is_oauth %}{{g.user.oauth_profile_url}}{% else %}{{url_for('static',filename='images/user.png')}}{% endif %}"/>&nbsp;&nbsp;<b>{{ g.user.first_name}}</b>
                             <ul class="sub-menu">
                                 <li><a href="{{ url_for('main.user_profile') }}"><i class="fa fa-user"></i>&nbsp;&nbsp;Profile</a></li>
                                 <li><a class="logout" href="#"><i class="fa fa-sign-out"></i>&nbsp;&nbsp;Sign out</a></li>

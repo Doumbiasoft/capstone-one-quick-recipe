@@ -14,3 +14,4 @@ build/
 *.egg-info/
 api_key.py
 admin_identifications.py
+google_client_secret.json

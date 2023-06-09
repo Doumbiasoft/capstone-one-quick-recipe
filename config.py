@@ -1,6 +1,6 @@
 import os
 from email.headerregistry import Address
-from api_key import api_key,email_key,email_sender,email_sender_name
+from api_key import api_key,email_key,email_sender,email_sender_name,google_client_id,google_project_id,google_redirect_uris,google_client_secret,google_redirect_uri
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -30,3 +30,13 @@ class Config:
        MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD',email_key)
        MAIL_SENDER_NAME = os.environ.get('MAIL_SENDER_NAME',email_sender_name)
        MAIL_DEFAULT_SENDER = Address(display_name = MAIL_SENDER_NAME, addr_spec = MAIL_USERNAME)
+
+       #----------Google Oauth2 Authentication parameters --------------------------------
+
+       GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID',google_client_id)
+       GOOGLE_PROJECT_ID = os.environ.get('GOOGLE_PROJECT_ID',google_project_id)
+       GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET',google_client_secret)
+       GOOGLE_REDIRECT_URIS = os.environ.get('GOOGLE_REDIRECT_URIS',google_redirect_uris)
+       GOOGLE_REDIRECT_URI = os.environ.get('GOOGLE_REDIRECT_URI',google_redirect_uri)
+
+       #----------END Google Oauth2 Authentication parameters --------------------------------
