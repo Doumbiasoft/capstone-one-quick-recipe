@@ -21,6 +21,7 @@ class Config:
        #WTF_CSRF_ENABLED = False
        #--------------food Api Key-------------
        API_KEY = os.environ.get('API_KEY',api_key)
+       API_CACHE_WEEKS_TIMEOUT = os.environ.get('API_CACHE_WEEKS_TIMEOUT',12)
        #--------------send mail parameters-------------
        MAIL_SERVER = os.environ.get('MAIL_SERVER','smtp.gmail.com')
        MAIL_PORT = os.environ.get('MAIL_PORT',465)

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %} Notification email {% endblock %}
+
+{% block content %}
+ <section class="contact-section">
+    <div class="container">
+        <div class="card-body">
+              <div class="row">
+                  <div class="text-center col-lg-12">
+                      <img alt src="{{url_for('static',filename='images/email-sent.svg')}}"  style="height:50%" />
+                      <p class="lead fw-bold" style="font-size: x-large;">
+                        A notification has been sent to your e-mail address to reset your password. Please check your mailbox.
+                        </p>
+                  </div>
+              </div>
+        </div>
+        </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+   
+{% endblock %}

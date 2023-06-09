@@ -1,4 +1,4 @@
-from app.extensions import render_template,redirect,flash,url_for,abort,request,g,session,jsonify,CURR_USER_KEY,os,APP_STATIC,Send_Email,URLSafeTimedSerializer,SignatureExpired,BadTimeSignature,app_config
+from app.extensions import render_template,redirect,flash,url_for,abort,request,g,session,jsonify,CURR_USER_KEY,os,APP_STATIC,EMAIL_RESET,Send_Email,URLSafeTimedSerializer,SignatureExpired,BadTimeSignature,app_config
 from app.auth import bp
 from app.forms.auth.login import LoginForm
 from app.forms.auth.register import RegisterForm
@@ -139,11 +139,81 @@ def clear_session():
      if CURR_USER_KEY in session:
          del session[CURR_USER_KEY]
 
+@bp.route('/email-reset-password', methods=['GET','POST'])
+def email_reset_password():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        user = User.get_users().filter(User.email == email, User.is_active == True).first()
+        if user:
+            if user.is_oauth:
+                flash('This email address has oauth authentication and cannot reset his password in this process!','warning')
+                return redirect(url_for('auth.email_reset_password'))
+            if send_email_reset_password(user.first_name, user.email):
+                return redirect(url_for('auth.send_email_reset_notification'))
+        else:
+            flash('This email address is not linked to any account!','warning')
+            return redirect(url_for('auth.email_reset_password'))
+
+    return render_template('auth/reset_email.html')
+
+@bp.route('reset-user-password/<token>', methods=['GET','POST'])
+def reset_user_password(token):
+    if request.method == 'GET':
+            try:
+                email = serializer.loads(token,max_age=120)
+                session[EMAIL_RESET] = email
+                user = User.get_users().filter(User.email == email, User.is_active == True).first()
+                if not user:
+                    abort(401)
+            except SignatureExpired:
+                return redirect(url_for('auth.token_expired_notification'))
+            except BadTimeSignature:
+                abort(401)
+            except Exception:
+                return redirect(url_for('auth.token_expired_notification'))
+            return render_template('auth/form_reset_change_password.html')
+
+    if request.method == 'POST':
+        try:
+            new_password= request.form.get('new_password')
+            confirm_new_password = request.form.get('confirm_new_password')
+            email = session.get(EMAIL_RESET)
+            user = User.get_users().filter(User.email == email, User.is_active == True).first()
+            if user:
+                if new_password != confirm_new_password:
+                   flash('The two passwords entered are not identical!','warning')
+                   return render_template('auth/form_reset_change_password.html')
+                if len(confirm_new_password) < 5:
+                    flash('Your passwords should be at least 5 characters long!','warning')
+                    return render_template('auth/form_reset_change_password.html')
+                user.password = User.hash_function(confirm_new_password)
+                if User.update_users(user):
+                    if EMAIL_RESET in session:
+                        del session[EMAIL_RESET]
+                        flash('Your password has been successfully changed!','success')
+                        return redirect(url_for('auth.authentication'))
+            else:
+                return redirect(url_for('auth.token_expired_notification'))
+        except SignatureExpired:
+                return redirect(url_for('auth.token_expired_notification'))
+        except BadTimeSignature:
+            abort(401)
+        except Exception:
+            return redirect(url_for('auth.token_expired_notification'))
+    return render_template('auth/form_reset_change_password.html')
+
+
 @bp.route('/activation-notification')
 def activation_notification():
     if g.user:
         return redirect(url_for('main.index'))
     return render_template('auth/activation_notification_page.html')
+
+@bp.route('/send-email-reset-notification')
+def send_email_reset_notification():
+    if g.user:
+        return redirect(url_for('main.index'))
+    return render_template('auth/send_email_reset_notification.html')
 
 @bp.route('/link-expired')
 def token_expired_notification():
@@ -152,7 +222,8 @@ def token_expired_notification():
     return render_template('auth/token_expired_page.html')
 
 
-@bp.route('account-activation/<token>', methods=['GET','POST'])
+
+@bp.route('account-activation/<token>', methods=['GET'])
 def account_activation(token):
     if request.method == 'GET':
         try:
@@ -196,7 +267,32 @@ def send_email_activation(recipient_name,recipient_email):
         msg = msg.replace('[LINKEDIN]',url_for('static',filename='images/linkedin.png',_external=True))
 
         Send_Email(recipient_email,subject,msg,'html')
-        flash('A notification has been sent to your email address for your account activation please check your email box.!','success')
+        flash('A notification has been sent to your e-mail address to activate your account. Please check your mailbox.!','success')
+        return True
+    except:
+        flash('failed!','danger')
+        return False
+
+def send_email_reset_password(recipient_name,recipient_email):
+    try:
+
+        token = serializer.dumps(recipient_email)
+        link = url_for('auth.reset_user_password',token=token,_external=True)
+        subject = "Reset Password"
+
+        with open(os.path.join(APP_STATIC, 'mails/password_reset_template.html')) as f:
+            html = f.read()
+
+        msg = html.replace('[FIRST_NAME]',recipient_name)
+        msg = msg.replace('[APP_LINK]',url_for('main.index',_external=True))
+        msg = msg.replace('[LOGO]',url_for('static',filename='images/quick-recipe-logo.png',_external=True))
+        msg = msg.replace('[ILLUS]',url_for('static',filename='images/reset-password-cuate.svg',_external=True))
+        msg = msg.replace('[LINK]',link)
+        msg = msg.replace('[GITHUB]',url_for('static',filename='images/github.png',_external=True))
+        msg = msg.replace('[LINKEDIN]',url_for('static',filename='images/linkedin.png',_external=True))
+
+        Send_Email(recipient_email,subject,msg,'html')
+        flash('A notification has been sent to your e-mail address to reset your password. Please check your mailbox.!','success')
         return True
     except:
         flash('failed!','danger')
@@ -215,7 +311,7 @@ def send_email_welcome(recipient_name,recipient_email):
         msg = msg.replace('[APP_LINK]',url_for('main.index',_external=True))
         msg = msg.replace('[LINK]',url_for('main.index',_external=True))
         msg = msg.replace('[LOGO]',url_for('static',filename='images/quick-recipe-logo.png',_external=True))
-        msg = msg.replace('[ILLUS]',url_for('static',filename='images/activation.svg',_external=True))
+        msg = msg.replace('[ILLUS]',url_for('static',filename='images/welcome.svg',_external=True))
         msg = msg.replace('[GITHUB]',url_for('static',filename='images/github.png',_external=True))
         msg = msg.replace('[LINKEDIN]',url_for('static',filename='images/linkedin.png',_external=True))
 

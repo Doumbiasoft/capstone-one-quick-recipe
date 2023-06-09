@@ -78,9 +78,9 @@
     <!-- Header End -->
     <div class="spad-mid"><hr class="hr-line"></div>
     <!--flash message-->
-    <div class="text-center m-2">
+    <div class="text-center">
         {% for type, msg in get_flashed_messages(with_categories=true) %}
-        <div class="alert alert-{{ type }} alert-dismissible alert-sm" role="alert" style="height: 30%;">
+        <div class="alert alert-{{ type }} alert-dismissible alert-sm m-2" role="alert" style="height: 30%;">
             <div >{{ msg }}</div>
        </div>
         {% endfor %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %} Reset password {% endblock %}
+
+{% block content %}
+ <section class="contact-section spad">
+    <section class="feature-recipe" style="padding-top: 0px;padding-bottom: 5px;background-color: transparent;">
+        <div class="section-title">
+            <h5><i class="fa fa-lock" style="font-size: large;"></i>&nbsp;Reset password </h5>
+        </div>
+    </section>
+    <div class="container">
+    <div style="padding: 20px;">
+        <a href="{{url_for('auth.authentication')}}"><i class="fa fa-arrow-circle-left" style="color: #e59038;font-size: 30px;"></i>&nbsp;<span style="text-decoration: none;color: black;font-weight: 700;font-size: 28px;">Login</span></a></li>
+    </div>
+    <div class="col-lg-6">
+        <form action="{{url_for('auth.email_reset_password')}}" method="POST" class="contact-form" >
+            <div class="text-center col-lg-12">
+                <img alt src="{{url_for('static',filename='images/sent-mail.svg')}}"  style="width:50%" />
+            </div>
+            <h3>Enter your email to reset your password</h3>
+            <div class="row">
+               
+                 <input type="email" name="email" placeholder="Email" required>
+                 <button type="submit" class="w-100 my-3">Reset Password</button>
+                 <div align="center" valign="center" class="col-12 Divloading my-3">
+                     <img alt="" src="{{url_for('static',filename='images/ajax_loader_smal_black.gif')}}" />
+                 </div>
+            </div>
+           
+        </form>
+    </div>
+       
+    </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+   
+{% endblock %}
