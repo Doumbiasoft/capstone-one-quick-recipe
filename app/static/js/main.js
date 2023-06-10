@@ -401,8 +401,7 @@ $(".email").on("blur", function(e){
 
 });
 
-$(".delete-account").on("click", async function (e) {
-  e.preventDefault();
+$(".delete-account").on("click", async function () {
 
   const $email = $("#email");
   let user={};
@@ -418,8 +417,8 @@ $(".delete-account").on("click", async function (e) {
       }
     });
 });
-
-$(".printpdf").on("click", async function (e) {
+// print pdf
+$(".printpdf").on("click", function (e) {
       e.preventDefault();
 
       const $video=$("#video");
