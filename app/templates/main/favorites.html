@@ -3,39 +3,41 @@
 
 {% block content %}
 
- <!-- Recipe Section Begin -->
- <section class="recipe-section spad">
+<!-- Recipe Section Begin -->
+<section class="recipe-section spad">
     <section class="feature-recipe" style="padding-top: 0px;padding-bottom: 5px;background-color: transparent;">
         <div class="section-title">
             <h5><i class="fa fa-heart" style="font-size: large;"></i>&nbsp;Favorite Recipes</h5>
         </div>
     </section>
     <div class="container">
-        {% if g.user.recipe_favorites  %}
+        {% if g.user.recipe_favorites %}
         <br><br>
         <div id="paginated-list" class="row" data-current-page="1" aria-live="polite">
             {% for recipe in g.user.recipe_favorites %}
             <div class="col-lg-4 col-sm-6 page-item">
                 <div class="recipe-item">
                     <a class="recipe-detail" data-obj="{{recipe.data}}" href="#">
-                        <div class="set-bg img" data-setbg="{{recipe.thumbnail_url}}" style="width:350px;height:340px"></div>
+                        <div class="set-bg img" data-setbg="{{recipe.thumbnail_url}}" style="width:350px;height:340px">
+                        </div>
                     </a>
                     <div class="ri-text">
                         <div class="cat-name">
-                           {% if recipe.tag  %}
-                               {{recipe.tag}}
+                            {% if recipe.tag %}
+                            {{recipe.tag}}
                             {% else %}
                             Recipe
                             {% endif %}
                         </div>
                         <div>
-                            <a href="#" class="pin-recipe black-btn btn  bg-dark text-white w-50" data-obj="{{recipe.data}}"><i class="fa fa-heart text-danger"></i>&nbsp;Unpin Recipe</a>
+                            <a href="#" class="pin-recipe black-btn btn  bg-dark text-white w-50"
+                                data-obj="{{recipe.data}}"><i class="fa fa-heart text-danger"></i>&nbsp;Unpin Recipe</a>
                         </div>
                         <a class="recipe-detail" data-obj="{{recipe.data}}" href="#">
                             <h4>{{recipe.name}}</h4>
                         </a>
                         <p>
-                            <div class="set-limit anker_tag" data-html="{{recipe.description}}" style="margin: 0px;"></div>
+                        <div class="set-limit anker_tag" data-html="{{recipe.description}}" style="margin: 0px;"></div>
                         </p>
                     </div>
                 </div>
@@ -46,33 +48,73 @@
         <div class="row">
             <div class="col-lg-12">
                 <nav class="pagination-container">
-                    <button class="pagination-button" id="prev-button" aria-label="Previous page" title="Previous page"><i class="fa fa-arrow-circle-left fa-2x"></i></button>
+                    <button class="pagination-button" id="prev-button" aria-label="Previous page"
+                        title="Previous page"><i class="fa fa-arrow-circle-left fa-2x"></i></button>
                     &nbsp;&nbsp;&nbsp;&nbsp;<div id="pagination-numbers"></div>&nbsp;&nbsp;
-                    <button class="pagination-button" id="next-button" aria-label="Next page" title="Next page"><i class="fa fa-arrow-circle-right fa-2x"></i></button>
+                    <button class="pagination-button" id="next-button" aria-label="Next page" title="Next page"><i
+                            class="fa fa-arrow-circle-right fa-2x"></i></button>
                 </nav>
             </div>
         </div>
         {% else%}
         <div class="container">
             <div class="card-body">
-                  <div class="row">
-                      <div class="text-center col-lg-12">
-                          <img alt src="{{url_for('static',filename='images/appreciation.svg')}}"  style="height:50%" />
-                          <p class="lead fw-bold" style="font-size: x-large;">
+                <div class="row">
+                    <div class="text-center col-lg-12">
+                        <img alt src="{{url_for('static',filename='images/appreciation.svg')}}" style="height:50%" />
+                        <p class="lead fw-bold" style="font-size: x-large;">
                             You do not have any favorite recipes yet.
-                            </p>
-                      </div>
-                  </div>
+                        </p>
+                    </div>
+                </div>
             </div>
-            </div>
+        </div>
         {% endif %}
-
     </div>
+
 </section>
 <!-- Recipe Section End -->
+{% if g.user.recipe_favorites %}
+<section class="recipe-section ">
+    <section class="feature-recipe" style="padding-top: 0px;padding-bottom: 5px;background-color: transparent;">
+        <div class="section-title">
+            <h5><i class="fa fa-binoculars" style="font-size: large;"></i>&nbsp;Recipe Suggestions base on your favorites</h5>
+        </div>
+    </section>
+    <br>
+    <div class="container">
+        <section class="top-recipe py-4 px-5">
+            <div class="wrapper  text-center">
+                <i id="left" class="fa fa-arrow-circle-left"></i>
+                <ul class="carousel">
+                    {% for recipe in recipe_suggestions %}
+                    <a class="recipe-detail" data-obj="{{obj_to_json(recipe)}}" href="#">
+                    <li class="card text-center">
+                        <div class="set-bg img" data-setbg="{{recipe.thumbnail_url}}" style="width:350px;height:350px">
+                        </div>
+                        <div class="m-2" align="left"
+                            style="color: #fff;background: #e59038;display: inline-block;font-size: 12px;font-weight: 700;text-transform: uppercase;padding: 4px 25px 4px 25px;">
+                            {% if recipe.tags  %}
+                                 {{recipe.tags[0].display_name.replace('_',' ')}}
+                            {% else %}
+                                Recipe
+                            {% endif %}
+                        </div>
+                            <h2 style="font-weight: 700">{{recipe.name}}</h2>
+                        </li>
+                    </a>
+                    {% endfor %}
+                </ul>
+                <i id="right" class="fa fa-arrow-circle-right"></i>
+            </div>
+        </section>
+    </div>
 
+</section>
+
+{% endif %}
 {% endblock %}
 
 {% block scripts %}
-    $('#link_favorite_recipes').toggleClass('active');
+$('#link_favorite_recipes').toggleClass('active');
 {% endblock %}

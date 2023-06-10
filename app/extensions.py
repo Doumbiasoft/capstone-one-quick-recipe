@@ -54,6 +54,6 @@ google_client_config = {
         "token_uri": "https://oauth2.googleapis.com/token",
         "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
         "client_secret": app_config.GOOGLE_CLIENT_SECRET,
-        "redirect_uris": app_config.GOOGLE_REDIRECT_URIS,
+        "redirect_uris":[f"{app_config.GOOGLE_REDIRECT_URI_BASE}/auth/google/callback"],
     }
 }

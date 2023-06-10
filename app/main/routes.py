@@ -68,8 +68,16 @@ def recipes_favorites():
                 abort(401)
     if not g.user:
         return redirect(url_for('main.index'))
+    recipe_suggestions=[]
 
-    return render_template('main/favorites.html')
+    if g.user.recipe_favorites:
+         url = f"{API_URL_BASE}/recipes/list-similarities"
+         random_recipe_id_list = [r.recipe_id for r in g.user.recipe_favorites]
+         recipe_id = sample(random_recipe_id_list, 1)
+         querystring = {"recipe_id":recipe_id}
+         recipe_suggestions = get_data(url,headers=headers,params=querystring)
+
+    return render_template('main/favorites.html',recipe_suggestions=recipe_suggestions.results)
 
 @bp.route('/subscribers')
 def get_subscribers():

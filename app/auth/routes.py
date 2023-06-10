@@ -13,7 +13,7 @@ import requests
 flow = Flow.from_client_config(
     client_config=google_client_config,
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
-    redirect_uri=f"{app_config.GOOGLE_REDIRECT_URI}/auth/google/callback"
+    redirect_uri=f"{app_config.GOOGLE_REDIRECT_URI_BASE}/auth/google/callback"
 )
 
 serializer = URLSafeTimedSerializer(app_config.SECRET_KEY)
@@ -60,7 +60,7 @@ def google_login_callback():
         flash('Successfully authenticated!','success')
         return redirect(url_for('main.index'))
     else:
-        user = User.get_users().filter(User.email == id_info.get("email")).first()
+        user = User.get_users().filter(User.email == id_info.get("email"),User.is_oauth == False).first()
         if user:
             flash('This email address already exists!','warning')
             return redirect(url_for('auth.authentication'))
@@ -166,7 +166,7 @@ def authentication():
             new_user =  User.register(register_first_name, register_last_name, register_email.casefold(), register_password_confirm,False,False)
 
 
-            if User.get_users().filter(User.email == register_email, User.is_active==True).count() > 0:
+            if User.get_users().filter(User.email == register_email, User.is_active==True).first():
                 register_form.register_email.errors = ["This email address already exists. Please enter another one or reset your password!"]
                 return render_template('auth/authentication.html',login_form=login_form,register_form=register_form,
                                 tab_one=tab_one,
@@ -395,7 +395,6 @@ def send_email_reset_password(recipient_name,recipient_email):
 def send_email_welcome(recipient_name,recipient_email):
     try:
 
-        token = serializer.dumps(recipient_email)
         subject = "Welcome"
 
         with open(os.path.join(APP_STATIC, 'mails/welcome_template.html')) as f:

@@ -1,6 +1,6 @@
 import os
 from email.headerregistry import Address
-from api_key import api_key,email_key,email_sender,email_sender_name,google_client_id,google_project_id,google_redirect_uris,google_client_secret,google_redirect_uri
+from api_key import api_key,email_key,email_sender,email_sender_name,google_client_id,google_project_id,google_client_secret,google_redirect_uri_base
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -36,7 +36,6 @@ class Config:
        GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID',google_client_id)
        GOOGLE_PROJECT_ID = os.environ.get('GOOGLE_PROJECT_ID',google_project_id)
        GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET',google_client_secret)
-       GOOGLE_REDIRECT_URIS = os.environ.get('GOOGLE_REDIRECT_URIS',google_redirect_uris)
-       GOOGLE_REDIRECT_URI = os.environ.get('GOOGLE_REDIRECT_URI',google_redirect_uri)
+       GOOGLE_REDIRECT_URI_BASE = os.environ.get('GOOGLE_REDIRECT_URI_BASE',google_redirect_uri_base)
 
        #----------END Google Oauth2 Authentication parameters --------------------------------
