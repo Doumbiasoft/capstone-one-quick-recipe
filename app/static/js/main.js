@@ -131,6 +131,9 @@ const user_check_current_pass_url = $("#user-check-current-pass-url").data('user
 const edit_user_password_url = $("#edit-user-password-url").data('edit-user-password-url');
 const delete_user_account_url = $("#delete-user-account-url").data('delete-user-account-url');
 
+const app_bootstrap_css_url = $("#app-bootstrap-css-url").data('app-bootstrap-css-url');
+const app_main_css_url = $("#app-main-css-url").data('app-main-css-url');
+
 
 $(".recipe-detail").on("click", async function (e) {
     e.preventDefault();
@@ -415,3 +418,33 @@ $(".delete-account").on("click", async function (e) {
       }
     });
 });
+
+$(".printpdf").on("click", async function (e) {
+      e.preventDefault();
+
+      const $video=$("#video");
+      const $link_feature=$("#link_feature");
+      const $social_media=$("#social_media");
+
+      hide($video);
+      hide($link_feature);
+      hide($social_media);
+      const pdf_name = $(this).data('pdf-name');
+      const divContents = $("#page_print").html();
+      show($video);
+      show($link_feature);
+      show($social_media);
+      const printWindow = window.open('', '', 'height=400,width=800');
+      printWindow.document.write(`<html><head><title>${pdf_name}</title>`);
+      printWindow.document.write(`<link rel="stylesheet" href="${app_bootstrap_css_url}" />`);
+      printWindow.document.write(`<link rel="stylesheet" href="${app_main_css_url}" />`);
+      printWindow.document.write('</head><body>');
+      printWindow.document.write(divContents);
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      printWindow.print();
+
+});
+
+
+//----------------print pdf--------

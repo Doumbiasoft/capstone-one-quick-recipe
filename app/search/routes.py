@@ -73,6 +73,8 @@ def recipes_details():
 
     return render_template('search/details.html',recipe=recipe)
 
+
+
 def get_type():
     seen = set()
     unique_list = []

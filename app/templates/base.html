@@ -25,7 +25,7 @@
       <!--Social Buttons for Bootstrap-->
      <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap-social.css')}}" rel="stylesheet" >
      <title>{% block title %} {% endblock %} - Quick Recipe</title>
-
+     {{ share.load() }}
 </head>
 <body>
     <!--Define javascript url with Flask url_for-->
@@ -39,6 +39,9 @@
     <div id="user-check-current-pass-url" data-user-check-current-pass-url="{{ url_for('main.user_check_current_pass') }}"></div>
     <div id="edit-user-password-url" data-edit-user-password-url="{{ url_for('main.user_save_password') }}"></div>
     <div id="delete-user-account-url" data-delete-user-account-url="{{ url_for('main.user_delete_account') }}"></div>
+
+    <div id="app-bootstrap-css-url" data-app-bootstrap-css-url="{{url_for('static',filename='css/bootstrap.min.css')}}"></div>
+    <div id="app-main-css-url" data-app-main-css-url="{{url_for('static',filename='css/style.css')}}"></div>
     <!--End Define javascript url with Flask url_for-->
 
     <!-- Page Preloder -->

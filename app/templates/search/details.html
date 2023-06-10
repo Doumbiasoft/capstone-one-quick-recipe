@@ -1,182 +1,202 @@
 {% extends 'base.html' %}
-{% block title %} Recipe details {% endblock %}
+{% block title %} {{recipe.name}} {% endblock %}
 
 {% block content %}
- <!-- Single Recipe Section Begin -->
+
+     <!-- Single Recipe Section Begin -->
  <div style="padding: 20px;">
     <a id="back" href="#"><i class="fa fa-arrow-circle-left" style="color: #e59038;font-size: 30px;"></i>&nbsp;<span style="text-decoration: none;color: black;font-weight: 700;font-size: 30px;">Go Back</span></a></li>
  </div>
- <section class="single-page-recipe spad">
-    <div class="recipe-top">
-        <div class="container-fluid text-center">
-            <div class="recipe-title" >
-                <h2>{{recipe.name}}</h2>
-                <ul class="tags">
-                    {% if recipe.tags  %}
-                        {%for tag in  recipe.tags%}
-                        <li>{{tag.display_name.replace('_',' ')}}</li>
-                        {% endfor %}
-                    {% else %}
-                        <li>Recipe</li>
-                    {% endif %}
-                </ul>
-            </div>
-           <div class="container set-bg" style="background-color:#F5F6FA;padding:0px;" data-setbg="{{recipe.thumbnail_url}}">
-            <div style="width:100%;backdrop-filter: blur(5px);">
-                <img src="{{recipe.thumbnail_url}}" style="width:540px;padding:0px;" alt="">
-            </div>
-           </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-5">
-                <div class="ingredients-item">
-                    <div class="intro-item">
-                        {% if recipe.renditions  %}
-                          <img src="{{recipe.renditions[0].poster_url}}" style="width:122px;height:122px;border-radius:50%;" alt="">
+ <div id="page_print">
+    <section class="single-page-recipe spad">
+        <div class="recipe-top">
+            <div class="container-fluid text-center">
+                <div class="recipe-title" >
+                    <h2>{{recipe.name}}</h2>
+                    <ul class="tags">
+                        {% if recipe.tags  %}
+                            {%for tag in  recipe.tags%}
+                            <li>{{tag.display_name.replace('_',' ')}}</li>
+                            {% endfor %}
                         {% else %}
-                          <img src="{{recipe.thumbnail_url}}" style="width:122px;height:122px;border-radius:50%;" alt="">
+                            <li>Recipe</li>
                         {% endif %}
-                        <h2 class="text-center">{{recipe.name}}</h2>
-                        <div class="rating">
-                        {% if recipe.user_ratings  %}
-                                {% if recipe.user_ratings.score < 1 or recipe.user_ratings.score == 0    %}
-                                    <i class="fa fa-star-o"></i>
-                                {% else  %}
-                                    {%for star in generate_float_range(0, recipe.user_ratings.score) %}
-                                    <i class="fa fa-star"></i>
-                                    {% endfor%}
-                                {% endif %}
-                                {%for star in generate_float_range(1,((5)-(recipe.user_ratings.score))) %}
-                                   <i class="fa fa-star-o"></i>
-                                {% endfor%}
-                        {% endif %}
-                        </div>
-                            <div class="reviews">
-                                {% if recipe.user_ratings  %}
-                                    {{recipe.user_ratings.score}} from {{recipe.user_ratings.count_negative + recipe.user_ratings.count_positive}} reviews
-                                {% endif %}
-                            </div>
-                        <div class="recipe-time">
-                            <ul>
-                                {% if recipe.prep_time_minutes  %}
-                                    <li>Prep time: <span>{{ recipe.prep_time_minutes }} min</span></li>
-                                {% endif %}
-                                {% if recipe.cook_time_minutes  %}
-                                    <li>Cook time: <span>{{ recipe.cook_time_minutes }} min</span></li>
-                                {% endif %}
-                                {% if recipe.num_servings  %}
-                                    <li>Yield: <span>{{ recipe.num_servings }}</span></li>
-                                {% endif %}
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="ingredient-list">
-                        <div class="recipe-btn text-center">
-
-                            {% if g.user %}
-                               <a href="#"> <i class="fa fa-print text-white text-white"></i>&nbsp;&nbsp;Print Recipe</a>
-                                {% if g.user.is_favorite(recipe.id) %}
-                                <a href="#" class="black-btn pin-recipe" data-obj="{{obj_to_json(recipe)}}"><i class="fa fa-heart text-danger"></i>&nbsp;&nbsp;Unpin Recipe</a>
-                                {% else %}
-                                <a href="#" class="black-btn pin-recipe" data-obj="{{obj_to_json(recipe)}}"><i class="fa fa-heart text-white"></i>&nbsp;&nbsp;Pin Recipe</a>
-                                {% endif %}
-                                <a href="#" class="black-btn my-2"><i class="fa fa-share-alt text-white"></i>&nbsp;&nbsp;Share</a>
-
-                            {% else %}
-                            <a href="#" data-toggle="modal" data-target="#alertModal"><i class="fa fa-print text-white text-white"></i>&nbsp;&nbsp;Print Recipe</a>
-                            <a href="#" data-toggle="modal" data-target="#alertModal" class="black-btn"><i class="fa fa-heart text-white"></i>&nbsp;&nbsp;Pin Recipe</a>
-                            <a href="#" data-toggle="modal" data-target="#alertModal" class="black-btn my-2"><i class="fa fa-share-alt text-white"></i>&nbsp;&nbsp;Share</a>
-                            {% endif %}
-                        </div>
-                        <div class="list-item">
-                            <h5>Ingredients</h5>
-                            {%if recipe.sections  %}
-                                {%for section in recipe.sections %}
-                                        <div class="salad-list">
-                                            {%if section.name  %}
-                                            <h6>{{section.name}}</h6>
-                                            {% endif %}
-                                            <ul>
-                                                {%if section.components %}
-                                                    {%for component in section.components %}
-                                                    <li>{{component.raw_text}}</li>
-                                                    {% endfor%}
-                                                {% endif %}
-                                            </ul>
-                                        </div>
-                                {% endfor%}
-                            {% else %}
-                            <ul>
-                                <li>No Ingredients</li>
-                            </ul>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                <div class="nutrition-fact">
-                    <div class="nutri-title">
-                        <h6><span style="color:#e59038"><i class="fa fa-star"></i>&nbsp;Credits</span></h6>
-                        <span>{{ recipe.yields }}</span>
-                    </div>
-                    <ul>
-                        {%for author in recipe.credits %}
-                        <li><span style="color:#e59038">[</span> {{ author.name }} <span style="color:#e59038">]</span></li>
-                        {% endfor%}
                     </ul>
                 </div>
+            <div class="container set-bg" style="background-color:#F5F6FA;padding:0px;" data-setbg="{{recipe.thumbnail_url}}">
+                <div style="width:100%;backdrop-filter: blur(5px);">
+                    <img src="{{recipe.thumbnail_url}}" style="width:540px;padding:0px;" alt="">
+                </div>
             </div>
-            <div class="col-lg-7">
-                <div class="recipe-right">
-                    <div class="recipe-desc">
-                        <h3>Description</h3>
-                        {%if recipe.description%}
-                           <div class="set-html" data-html="{{recipe.description}}"></div>
-                        {% else %}
-                           No description
-                        {% endif %}
-                    </div>
-                    <div class="instruction-list">
-                        <h3>Instructions</h3>
-                        <ul>
-                             {%if recipe.instructions%}
-                                {%for instruction in  recipe.instructions%}
-                                   <li>
-                                        {%if instruction.position < 10 %}
-                                          <span>0{{instruction.position}}.</span>
-                                        {% else %}
-                                          <span>{{instruction.position}}.</span>
-                                        {% endif %}
-                                          {{instruction.display_text}}
-                                  </li>
-                                {% endfor %}
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="ingredients-item">
+                        <div class="intro-item">
+                            {% if recipe.renditions  %}
+                            <img src="{{recipe.renditions[0].poster_url}}" style="width:122px;height:122px;border-radius:50%;" alt="">
                             {% else %}
-                                No instructions
+                            <img src="{{recipe.thumbnail_url}}" style="width:122px;height:122px;border-radius:50%;" alt="">
                             {% endif %}
-                        </ul>
-                    </div>
-                    {%if recipe.original_video_url%}
-                    <div class="notes">
-                        <h3><i class="fa fa-play-circle"></i>&nbsp;Video</h3>
-                        <div class="notes-item">
-                            <div class="set-bg" style="background-color:#F5F6FA;padding:0px;" data-setbg="{{recipe.thumbnail_url}}">
-                                <div style="width:100%;backdrop-filter: blur(5px);">
-                                    <video style="width:100%;height:500px"  controls>
-                                        <source src="{{recipe.original_video_url}}" type="video/mp4">
-                                        <source src="{{recipe.original_video_url}}" type="video/ogg">
-                                      Your browser does not support the video tag.
-                                    </video>
+                            <h2 class="text-center">{{recipe.name}}</h2>
+                            <div class="rating">
+                            {% if recipe.user_ratings  %}
+                                    {% if recipe.user_ratings.score < 1 or recipe.user_ratings.score == 0    %}
+                                        <i class="fa fa-star-o"></i>
+                                    {% else  %}
+                                        {%for star in generate_float_range(0, recipe.user_ratings.score) %}
+                                        <i class="fa fa-star"></i>
+                                        {% endfor%}
+                                    {% endif %}
+                                    {%for star in generate_float_range(1,((5)-(recipe.user_ratings.score))) %}
+                                    <i class="fa fa-star-o"></i>
+                                    {% endfor%}
+                            {% endif %}
+                            </div>
+                                <div class="reviews">
+                                    {% if recipe.user_ratings  %}
+                                        {{recipe.user_ratings.score}} from {{recipe.user_ratings.count_negative + recipe.user_ratings.count_positive}} reviews
+                                    {% endif %}
                                 </div>
-                               </div>
+                            <div class="recipe-time">
+                                <ul>
+                                    {% if recipe.prep_time_minutes  %}
+                                        <li>Prep time: <span>{{ recipe.prep_time_minutes }} min</span></li>
+                                    {% endif %}
+                                    {% if recipe.cook_time_minutes  %}
+                                        <li>Cook time: <span>{{ recipe.cook_time_minutes }} min</span></li>
+                                    {% endif %}
+                                    {% if recipe.num_servings  %}
+                                        <li>Yield: <span>{{ recipe.num_servings }}</span></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ingredient-list">
+                            <div id="link_feature" class="recipe-btn text-center">
+
+                                {% if g.user %}
+                                    <a href="#" data-pdf-name="{{recipe.name}}" class="printpdf"><i class="fa fa-print text-white"></i>&nbsp;&nbsp;Print Recipe</a>
+                                    <a href="#" class="black-btn pin-recipe" data-obj="{{obj_to_json(recipe)}}"><i class="fa fa-heart {% if g.user.is_favorite(recipe.id) %} text-white {% else %} text-danger  {% endif %}"></i>&nbsp;&nbsp;{% if g.user.is_favorite(recipe.id) %}Pin Recipe{% else %}Unpin Recipe{% endif %}</a>
+                                {% else %}
+                                    <a href="#" data-toggle="modal" data-target="#alertModal"><i class="fa fa-print text-white"></i>&nbsp;&nbsp;Print Recipe</a>
+                                    <a href="#" data-toggle="modal" data-target="#alertModal" class="black-btn"><i class="fa fa-heart text-white"></i>&nbsp;&nbsp;Pin Recipe</a>
+                                {% endif %}
+                            </div>
+                            {% if g.user %}
+                            <div id="social_media">
+                                <p>
+                                    <i class="fa fa-share-alt fa-1x"></i>&nbsp;&nbsp;<span style="font-weight: 700;">Share with:</span>
+                                    <br>
+                                    {{ share.create(title='', sites='facebook,twitter,linkedin',mobile_sites='facebook,twitter,linkedin') }}
+                                    <br>
+                                </p>
+                            </div>
+                            {% else %}
+                            <div>
+                                <a href="#" data-toggle="modal" data-target="#alertModal">
+                                    <p>
+                                        <i class="fa fa-share-alt fa-1x"></i>&nbsp;&nbsp;<span style="font-weight: 700;">Share with:</span>
+                                        <br>
+                                        {{ share.create(title='', sites='facebook,twitter,linkedin',mobile_sites='facebook,twitter,linkedin') }}
+                                        <br>
+                                    </p>
+                                </a>
+                            </div>
+                            {% endif %}
+                            <div class="list-item">
+                                <h5>Ingredients</h5>
+                                {%if recipe.sections  %}
+                                    {%for section in recipe.sections %}
+                                            <div class="salad-list">
+                                                {%if section.name  %}
+                                                <h6>{{section.name}}</h6>
+                                                {% endif %}
+                                                <ul>
+                                                    {%if section.components %}
+                                                        {%for component in section.components %}
+                                                        <li>{{component.raw_text}}</li>
+                                                        {% endfor%}
+                                                    {% endif %}
+                                                </ul>
+                                            </div>
+                                    {% endfor%}
+                                {% else %}
+                                <ul>
+                                    <li>No Ingredients</li>
+                                </ul>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                    {% endif %}
+                    <div class="nutrition-fact">
+                        <div class="nutri-title">
+                            <h6><span style="color:#e59038"><i class="fa fa-star"></i>&nbsp;Credits</span></h6>
+                            <span>{{ recipe.yields }}</span>
+                        </div>
+                        <ul>
+                            {%for author in recipe.credits %}
+                            <li><span style="color:#e59038">[</span> {{ author.name }} <span style="color:#e59038">]</span></li>
+                            {% endfor%}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="recipe-right">
+                        <div class="recipe-desc">
+                            <h3>Description</h3>
+                            {%if recipe.description%}
+                            <div class="set-html" data-html="{{recipe.description}}"></div>
+                            {% else %}
+                            No description
+                            {% endif %}
+                        </div>
+                        <div class="instruction-list">
+                            <h3>Instructions</h3>
+                            <ul>
+                                {%if recipe.instructions%}
+                                    {%for instruction in  recipe.instructions%}
+                                    <li>
+                                            {%if instruction.position < 10 %}
+                                            <span>0{{instruction.position}}.</span>
+                                            {% else %}
+                                            <span>{{instruction.position}}.</span>
+                                            {% endif %}
+                                            {{instruction.display_text}}
+                                    </li>
+                                    {% endfor %}
+                                {% else %}
+                                    No instructions
+                                {% endif %}
+                            </ul>
+                        </div>
+                        {%if recipe.original_video_url%}
+                        <div id="video" class="notes">
+                            <h3><i class="fa fa-play-circle"></i>&nbsp;Video</h3>
+                            <div class="notes-item">
+                                <div class="set-bg" style="background-color:#F5F6FA;padding:0px;" data-setbg="{{recipe.thumbnail_url}}">
+                                    <div style="width:100%;backdrop-filter: blur(5px);">
+                                        <video style="width:100%;height:500px"  controls>
+                                            <source src="{{recipe.original_video_url}}" type="video/mp4">
+                                            <source src="{{recipe.original_video_url}}" type="video/ogg">
+                                        Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+<!---balise print pdf-->
+</div>
+<!---end balise print pdf-->
+
 <!-- Single Recipe Section End -->
  <!-- Modal alert -->
 <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
@@ -202,6 +222,8 @@
     </div>
   </div>
   <!-- End Modal alert -->
+
+
 {% endblock %}
 
 {% block scripts %}
@@ -209,4 +231,5 @@
     $('#back').on('click', function(){
         history.back();
     });
+   
 {% endblock %}

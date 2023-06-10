@@ -18,6 +18,7 @@ Flask==2.3.2
 Flask-Bcrypt==1.0.1
 Flask-DebugToolbar==0.13.1
 Flask-Session==0.5.0
+Flask-Share==0.1.1
 Flask-SQLAlchemy==3.0.3
 Flask-WTF==1.1.1
 google-auth==2.19.1
