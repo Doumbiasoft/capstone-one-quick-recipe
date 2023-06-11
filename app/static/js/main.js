@@ -418,8 +418,7 @@ $(".delete-account").on("click", async function () {
     });
 });
 // print pdf
-$(".printpdf").on("click", function (e) {
-      e.preventDefault();
+$("#print-pdf").on("click", function () {
 
       const $video=$("#video");
       const $link_feature=$("#link_feature");
@@ -444,6 +443,3 @@ $(".printpdf").on("click", function (e) {
       printWindow.print();
 
 });
-
-
-//----------------print pdf--------

@@ -2579,3 +2579,13 @@ ol {
   #scrollToTopBtn:hover {
 	background-color: #555;
   }
+
+  .qr-btn {
+	display: inline-block;
+	background: #e59038;
+	color: #fff;
+	padding: 15px 57px;
+	font-size: 16px;
+	font-weight: 700;
+	cursor: pointer;
+}

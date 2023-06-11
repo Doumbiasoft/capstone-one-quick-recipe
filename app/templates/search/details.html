@@ -78,7 +78,7 @@
                             <div id="link_feature" class="recipe-btn text-center">
 
                                 {% if g.user %}
-                                    <a href="#" data-pdf-name="{{recipe.name}}" class="printpdf"><i class="fa fa-print text-white"></i>&nbsp;&nbsp;Print Recipe</a>
+                                    <a  style="cursor: pointer;" id="print-pdf" data-pdf-name="{{recipe.name}}" class="printpdf"><i class="fa fa-print text-white"></i>&nbsp;&nbsp;Print Recipe</a>
                                     <a href="#" class="black-btn pin-recipe" data-obj="{{obj_to_json(recipe)}}"><i class="fa fa-heart {% if g.user.is_favorite(recipe.id) %} text-white {% else %} text-danger  {% endif %}"></i>&nbsp;&nbsp;{% if g.user.is_favorite(recipe.id) %}Pin Recipe{% else %}Unpin Recipe{% endif %}</a>
                                 {% else %}
                                     <a href="#" data-toggle="modal" data-target="#alertModal"><i class="fa fa-print text-white"></i>&nbsp;&nbsp;Print Recipe</a>
