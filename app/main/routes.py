@@ -76,8 +76,10 @@ def recipes_favorites():
          recipe_id = sample(random_recipe_id_list, 1)
          querystring = {"recipe_id":recipe_id}
          recipe_suggestions = get_data(url,headers=headers,params=querystring)
-
-    return render_template('main/favorites.html',recipe_suggestions=recipe_suggestions.results)
+    if recipe_suggestions:
+        return render_template('main/favorites.html',recipe_suggestions=recipe_suggestions.results)
+    else:
+       return render_template('main/favorites.html',recipe_suggestions=recipe_suggestions)
 
 @bp.route('/subscribers')
 def get_subscribers():
