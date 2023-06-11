@@ -1,6 +1,5 @@
 import os
 from email.headerregistry import Address
-from api_key import api_key,email_key,email_sender,email_sender_name,google_client_id,google_project_id,google_client_secret,google_redirect_uri_base
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -20,22 +19,22 @@ class Config:
        DEBUG_TB_HOSTS = ['dont-show-debug-toolbar']
        #WTF_CSRF_ENABLED = False
        #--------------food Api Key-------------
-       API_KEY = os.environ.get('API_KEY',api_key)
+       API_KEY = os.environ.get('API_KEY',None)
        API_CACHE_WEEKS_TIMEOUT = os.environ.get('API_CACHE_WEEKS_TIMEOUT',12)
        #--------------send mail parameters-------------
        MAIL_SERVER = os.environ.get('MAIL_SERVER','smtp.gmail.com')
        MAIL_PORT = os.environ.get('MAIL_PORT',465)
        MAIL_SMTP = os.environ.get('MAIL_SMTP','smtp.gmail.com')
-       MAIL_USERNAME = os.environ.get('MAIL_USERNAME',email_sender)
-       MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD',email_key)
-       MAIL_SENDER_NAME = os.environ.get('MAIL_SENDER_NAME',email_sender_name)
+       MAIL_USERNAME = os.environ.get('MAIL_USERNAME',None)
+       MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD',None)
+       MAIL_SENDER_NAME = os.environ.get('MAIL_SENDER_NAME','Quick Recipe')
        MAIL_DEFAULT_SENDER = Address(display_name = MAIL_SENDER_NAME, addr_spec = MAIL_USERNAME)
 
        #----------Google Oauth2 Authentication parameters --------------------------------
 
-       GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID',google_client_id)
-       GOOGLE_PROJECT_ID = os.environ.get('GOOGLE_PROJECT_ID',google_project_id)
-       GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET',google_client_secret)
-       GOOGLE_REDIRECT_URI_BASE = os.environ.get('GOOGLE_REDIRECT_URI_BASE',google_redirect_uri_base)
+       GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID',None)
+       GOOGLE_PROJECT_ID = os.environ.get('GOOGLE_PROJECT_ID',None)
+       GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET',None)
+       GOOGLE_REDIRECT_URI_BASE = os.environ.get('GOOGLE_REDIRECT_URI_BASE','http://127.0.0.1:5000')
 
        #----------END Google Oauth2 Authentication parameters --------------------------------
