@@ -113,17 +113,18 @@ def authentication():
         email = login_form.login_email.data
         password = login_form.login_password.data
         check_account_type = User.get_users().filter(User.email == email).first()
-        if check_account_type.is_oauth:
-            flash('This email address is linked to a Google OAuth authentication !','warning')
-            return render_template('auth/authentication.html',login_form=login_form,register_form=register_form,
-                        tab_one=tab_one,
-                        tab_selected_one=tab_selected_one,
-                        tab_show_one=tab_show_one,
-                        tab_two=tab_two,
-                        tab_selected_two=tab_selected_two,
-                        tab_show_two=tab_show_two,
+        if check_account_type:
+            if check_account_type.is_oauth:
+                flash('This email address is linked to a Google OAuth authentication !','warning')
+                return render_template('auth/authentication.html',login_form=login_form,register_form=register_form,
+                            tab_one=tab_one,
+                            tab_selected_one=tab_selected_one,
+                            tab_show_one=tab_show_one,
+                            tab_two=tab_two,
+                            tab_selected_two=tab_selected_two,
+                            tab_show_two=tab_show_two,
 
-                        )
+                            )
 
         user = User.login(email = email.casefold(), password = password)
         if user:
@@ -355,7 +356,7 @@ def send_email_activation(recipient_name,recipient_email):
         msg = html.replace('[FIRST_NAME]',recipient_name)
         msg = msg.replace('[APP_LINK]',url_for('main.index',_external=True))
         msg = msg.replace('[LOGO]',url_for('static',filename='images/quick-recipe-logo.png',_external=True))
-        msg = msg.replace('[ILLUS]',url_for('static',filename='images/activation.svg',_external=True))
+        msg = msg.replace('[ILLUS]',url_for('static',filename='images/activation.png',_external=True))
         msg = msg.replace('[LINK]',link)
         msg = msg.replace('[GITHUB]',url_for('static',filename='images/github.png',_external=True))
         msg = msg.replace('[LINKEDIN]',url_for('static',filename='images/linkedin.png',_external=True))
@@ -380,7 +381,7 @@ def send_email_reset_password(recipient_name,recipient_email):
         msg = html.replace('[FIRST_NAME]',recipient_name)
         msg = msg.replace('[APP_LINK]',url_for('main.index',_external=True))
         msg = msg.replace('[LOGO]',url_for('static',filename='images/quick-recipe-logo.png',_external=True))
-        msg = msg.replace('[ILLUS]',url_for('static',filename='images/reset-password-cuate.svg',_external=True))
+        msg = msg.replace('[ILLUS]',url_for('static',filename='images/reset-password.png',_external=True))
         msg = msg.replace('[LINK]',link)
         msg = msg.replace('[GITHUB]',url_for('static',filename='images/github.png',_external=True))
         msg = msg.replace('[LINKEDIN]',url_for('static',filename='images/linkedin.png',_external=True))
@@ -404,7 +405,7 @@ def send_email_welcome(recipient_name,recipient_email):
         msg = msg.replace('[APP_LINK]',url_for('main.index',_external=True))
         msg = msg.replace('[LINK]',url_for('main.index',_external=True))
         msg = msg.replace('[LOGO]',url_for('static',filename='images/quick-recipe-logo.png',_external=True))
-        msg = msg.replace('[ILLUS]',url_for('static',filename='images/welcome.svg',_external=True))
+        msg = msg.replace('[ILLUS]',url_for('static',filename='images/welcome.png',_external=True))
         msg = msg.replace('[GITHUB]',url_for('static',filename='images/github.png',_external=True))
         msg = msg.replace('[LINKEDIN]',url_for('static',filename='images/linkedin.png',_external=True))
 
