@@ -3,11 +3,9 @@ from config import Config
 from app.models.users import User
 from flask_share import Share
 
-#def create_app(config_class=Config):
-def create_app(config=None):
-    app = Flask(__name__,instance_relative_config=True)
-    app.config.from_object(Config)
-    #app.config.from_object(Config)
+def create_app(config=Config):
+    app = Flask(__name__)
+    app.config.from_object(config)
 
     # Initialize the session extension
     Session(app)
