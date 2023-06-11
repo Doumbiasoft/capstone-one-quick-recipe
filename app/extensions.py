@@ -14,16 +14,14 @@ import datetime
 from datetime import timedelta
 import json
 from helpers import Json2Object,get_data,Object2Json,convert_json
-from mailing import Send_Email
+from app.mailing import Send_Email
 from random import randrange,sample
 import numpy
 from itsdangerous import SignatureExpired,BadTimeSignature,URLSafeTimedSerializer
-from config import Config
 
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
-app_config=Config()
 #-------------Admin info-----------
 ADMIN_FIRST_NAME='ADMIN_FIRST_NAME'
 ADMIN_LAST_NAME='ADMIN_LAST_NAME'
@@ -37,7 +35,7 @@ CURR_USER_KEY = "curr_user_key"
 
 API_URL_BASE ="https://tasty.p.rapidapi.com"
 headers = {
-	"X-RapidAPI-Key": app_config.API_KEY,
+	"X-RapidAPI-Key": os.getenv('API_KEY',None),
 	"X-RapidAPI-Host": "tasty.p.rapidapi.com"
 }
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))   # refers to application_top
@@ -48,12 +46,12 @@ APP_STATIC = os.path.join(APP_ROOT, 'static')
 # export OAUTHLIB_INSECURE_TRANSPORT=1
 google_client_config = {
     "web": {
-        "client_id": app_config.GOOGLE_CLIENT_ID,
-        "project_id": app_config.GOOGLE_PROJECT_ID,
+        "client_id": os.getenv('GOOGLE_CLIENT_ID',None),
+        "project_id": os.getenv('GOOGLE_PROJECT_ID',None),
         "auth_uri": "https://accounts.google.com/o/oauth2/auth",
         "token_uri": "https://oauth2.googleapis.com/token",
         "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-        "client_secret": app_config.GOOGLE_CLIENT_SECRET,
-        "redirect_uris":[f"{app_config.GOOGLE_REDIRECT_URI_BASE}/auth/google/callback"],
+        "client_secret": os.getenv('GOOGLE_CLIENT_SECRET',None),
+        "redirect_uris":[f"{os.getenv('GOOGLE_REDIRECT_URI_BASE',None)}/auth/google/callback"],
     }
 }

@@ -2,6 +2,7 @@ import smtplib
 import ssl
 from email.message import EmailMessage
 from config import Config
+import os
 app_config=Config
 
 

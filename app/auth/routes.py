@@ -1,4 +1,4 @@
-from app.extensions import render_template,redirect,flash,url_for,abort,request,g,session,db,jsonify,CURR_USER_KEY,os,APP_STATIC,EMAIL_RESET,Send_Email,URLSafeTimedSerializer,SignatureExpired,BadTimeSignature,app_config,google_client_config
+from app.extensions import render_template,redirect,flash,url_for,abort,request,g,session,db,jsonify,CURR_USER_KEY,os,APP_STATIC,EMAIL_RESET,Send_Email,URLSafeTimedSerializer,SignatureExpired,BadTimeSignature,google_client_config
 from app.auth import bp
 from app.forms.auth.login import LoginForm
 from app.forms.auth.register import RegisterForm
@@ -13,10 +13,10 @@ import requests
 flow = Flow.from_client_config(
     client_config=google_client_config,
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],
-    redirect_uri=f"{app_config.GOOGLE_REDIRECT_URI_BASE}/auth/google/callback"
+    redirect_uri=f"{os.getenv('GOOGLE_REDIRECT_URI_BASE',None)}/auth/google/callback"
 )
 
-serializer = URLSafeTimedSerializer(app_config.SECRET_KEY)
+serializer = URLSafeTimedSerializer(os.getenv('URL_SAFE_KEY',None))
 
 
 @bp.route('/google-login')
@@ -42,7 +42,7 @@ def google_login_callback():
     id_info = id_token.verify_oauth2_token(
         id_token=credentials._id_token,
         request=token_request,
-        audience= app_config.GOOGLE_CLIENT_ID
+        audience= os.getenv('GOOGLE_CLIENT_ID',None)
     )
     user = User.get_users().filter(User.oauth_uid == id_info.get("sub"), User.is_active == True, User.is_oauth == True).first()
     if user:
