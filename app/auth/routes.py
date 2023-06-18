@@ -353,17 +353,17 @@ def send_email_activation(recipient_name,recipient_email):
         with open(os.path.join(APP_STATIC, 'mails/account_activation_template.html')) as f:
             html = f.read()
 
-        msg = html.replace('[FIRST_NAME]',recipient_name)
-        msg = msg.replace('[APP_LINK]',url_for('main.index',_external=True))
-        msg = msg.replace('[LOGO]',url_for('static',filename='images/quick-recipe-logo.png',_external=True))
-        msg = msg.replace('[ILLUS]',url_for('static',filename='images/activation.png',_external=True))
-        msg = msg.replace('[LINK]',link)
-        msg = msg.replace('[GITHUB]',url_for('static',filename='images/github.png',_external=True))
-        msg = msg.replace('[LINKEDIN]',url_for('static',filename='images/linkedin.png',_external=True))
+            msg = html.replace('[FIRST_NAME]',recipient_name)
+            msg = msg.replace('[APP_LINK]',url_for('main.index',_external=True))
+            msg = msg.replace('[LOGO]',url_for('static',filename='images/quick-recipe-logo.png',_external=True))
+            msg = msg.replace('[ILLUS]',url_for('static',filename='images/activation.png',_external=True))
+            msg = msg.replace('[LINK]',link)
+            msg = msg.replace('[GITHUB]',url_for('static',filename='images/github.png',_external=True))
+            msg = msg.replace('[LINKEDIN]',url_for('static',filename='images/linkedin.png',_external=True))
 
-        Send_Email(recipient_email,subject,msg,'html')
-        flash('A notification has been sent to your e-mail address to activate your account. Please check your mailbox.!','success')
-        return True
+            Send_Email(recipient_email,subject,msg,'html')
+            flash('A notification has been sent to your e-mail address to activate your account. Please check your mailbox.!','success')
+            return True
     except:
         flash('failed!','danger')
         return False
@@ -378,17 +378,17 @@ def send_email_reset_password(recipient_name,recipient_email):
         with open(os.path.join(APP_STATIC, 'mails/password_reset_template.html')) as f:
             html = f.read()
 
-        msg = html.replace('[FIRST_NAME]',recipient_name)
-        msg = msg.replace('[APP_LINK]',url_for('main.index',_external=True))
-        msg = msg.replace('[LOGO]',url_for('static',filename='images/quick-recipe-logo.png',_external=True))
-        msg = msg.replace('[ILLUS]',url_for('static',filename='images/reset-password.png',_external=True))
-        msg = msg.replace('[LINK]',link)
-        msg = msg.replace('[GITHUB]',url_for('static',filename='images/github.png',_external=True))
-        msg = msg.replace('[LINKEDIN]',url_for('static',filename='images/linkedin.png',_external=True))
+            msg = html.replace('[FIRST_NAME]',recipient_name)
+            msg = msg.replace('[APP_LINK]',url_for('main.index',_external=True))
+            msg = msg.replace('[LOGO]',url_for('static',filename='images/quick-recipe-logo.png',_external=True))
+            msg = msg.replace('[ILLUS]',url_for('static',filename='images/reset-password.png',_external=True))
+            msg = msg.replace('[LINK]',link)
+            msg = msg.replace('[GITHUB]',url_for('static',filename='images/github.png',_external=True))
+            msg = msg.replace('[LINKEDIN]',url_for('static',filename='images/linkedin.png',_external=True))
 
-        Send_Email(recipient_email,subject,msg,'html')
-        flash('A notification has been sent to your e-mail address to reset your password. Please check your mailbox.!','success')
-        return True
+            Send_Email(recipient_email,subject,msg,'html')
+            flash('A notification has been sent to your e-mail address to reset your password. Please check your mailbox.!','success')
+            return True
     except:
         flash('failed!','danger')
         return False
@@ -401,16 +401,16 @@ def send_email_welcome(recipient_name,recipient_email):
         with open(os.path.join(APP_STATIC, 'mails/welcome_template.html')) as f:
             html = f.read()
 
-        msg = html.replace('[FIRST_NAME]',recipient_name)
-        msg = msg.replace('[APP_LINK]',url_for('main.index',_external=True))
-        msg = msg.replace('[LINK]',url_for('main.index',_external=True))
-        msg = msg.replace('[LOGO]',url_for('static',filename='images/quick-recipe-logo.png',_external=True))
-        msg = msg.replace('[ILLUS]',url_for('static',filename='images/welcome.png',_external=True))
-        msg = msg.replace('[GITHUB]',url_for('static',filename='images/github.png',_external=True))
-        msg = msg.replace('[LINKEDIN]',url_for('static',filename='images/linkedin.png',_external=True))
+            msg = html.replace('[FIRST_NAME]',recipient_name)
+            msg = msg.replace('[APP_LINK]',url_for('main.index',_external=True))
+            msg = msg.replace('[LINK]',url_for('main.index',_external=True))
+            msg = msg.replace('[LOGO]',url_for('static',filename='images/quick-recipe-logo.png',_external=True))
+            msg = msg.replace('[ILLUS]',url_for('static',filename='images/welcome.png',_external=True))
+            msg = msg.replace('[GITHUB]',url_for('static',filename='images/github.png',_external=True))
+            msg = msg.replace('[LINKEDIN]',url_for('static',filename='images/linkedin.png',_external=True))
 
-        Send_Email(recipient_email,subject,msg,'html')
-        return True
+            Send_Email(recipient_email,subject,msg,'html')
+            return True
     except:
         flash('failed!','danger')
         return False
