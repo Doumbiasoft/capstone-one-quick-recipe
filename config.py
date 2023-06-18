@@ -22,13 +22,14 @@ class Config:
        API_KEY = os.getenv('API_KEY',None)
        API_CACHE_WEEKS_TIMEOUT = os.getenv('API_CACHE_WEEKS_TIMEOUT',12)
        #--------------send mail parameters-------------
-       MAIL_SERVER = os.getenv('MAIL_SERVER','smtp.gmail.com')
-       MAIL_PORT = os.getenv('MAIL_PORT',465)
-       MAIL_SMTP = os.getenv('MAIL_SMTP','smtp.gmail.com')
+       MAIL_SERVER = os.getenv('MAIL_SERVER','smtp.sendgrid.net')
+       MAIL_PORT = os.getenv('MAIL_PORT',587)
+       MAIL_SMTP = os.getenv('MAIL_SMTP','smtp.sendgrid.net')
        MAIL_USERNAME = os.getenv('MAIL_USERNAME',None)
        MAIL_PASSWORD = os.getenv('MAIL_PASSWORD',None)
        MAIL_SENDER_NAME = os.getenv('MAIL_SENDER_NAME','Quick Recipe')
-       MAIL_DEFAULT_SENDER = Address(display_name = MAIL_SENDER_NAME, addr_spec = MAIL_USERNAME)
+       MAIL_SENDER = os.getenv('MAIL_SENDER',None)
+       MAIL_DEFAULT_SENDER = Address(display_name = MAIL_SENDER_NAME, addr_spec = MAIL_SENDER)
 
        #----------Google Oauth2 Authentication parameters --------------------------------
 
