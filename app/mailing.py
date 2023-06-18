@@ -18,15 +18,15 @@ def Send_Email(recipient:str,subject:str,message:str,content_type:str="html"):
     if content_type =='text':
         msg.set_content(message)
 
-    if app_config.MAIL_PORT == 465:
+    if str(app_config.MAIL_PORT) == str(465):
         # Add SSL (layer of security)
         context = ssl.create_default_context()
         # Log in and send the email
         with smtplib.SMTP_SSL(app_config.MAIL_SMTP, app_config.MAIL_PORT, context=context) as smtp:
             smtp.login(app_config.MAIL_USERNAME, app_config.MAIL_PASSWORD)
-        data = smtp.sendmail(app_config.MAIL_USERNAME, recipient, msg.as_string())
+            data = smtp.sendmail(app_config.MAIL_USERNAME, recipient, msg.as_string())
 
-    if app_config.MAIL_PORT == 587:
+    if str(app_config.MAIL_PORT) == str(587):
         with smtplib.SMTP(app_config.MAIL_SMTP, app_config.MAIL_PORT) as smtp:
             smtp.login(app_config.MAIL_USERNAME, app_config.MAIL_PASSWORD)
             data = smtp.sendmail(app_config.MAIL_USERNAME, recipient, msg.as_string())
