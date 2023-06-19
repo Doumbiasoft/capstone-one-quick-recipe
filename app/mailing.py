@@ -13,10 +13,10 @@ def Send_Email(recipient:str,subject:str,message:str,content_type:str="html"):
     msg['To'] = recipient
     msg['Subject'] = subject
     if content_type =='html':
-        msg.set_type('text/html')
-        msg.add_alternative(message, subtype="html")
+        msg.set_content(message, subtype="html")
     if content_type =='text':
-        msg.set_content(message)
+         msg.set_content(message)
+
 
     if str(app_config.MAIL_PORT) == str(465):
         # Add SSL (layer of security)
